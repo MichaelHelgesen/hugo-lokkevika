@@ -1,4 +1,4 @@
-    {{ $url := "https://strapi-production-7261.up.railway.app/api/menies?populate=*" }}
+    {{ $url := "https://strapi-production-4b65.up.railway.app/api/menies?populate=*" }}
     {{ $opts := dict
       "headers" (dict "Authorization" "Bearer c1be690c329624fbb7e4eaf9c103b6084bb5032fa4e96be1c3223f60664a8f61086992438ebc4dc56cc33eeb0fe3e675e648f16f439e10916ad7d8b75d58e5b62a12f909ff7047f4225083d96e5d32700ae8b9d0cac373ae07861a69f9931d7f0b91ee136a9548ec34f13d864172c3d2ee6e33cbaa453363d30f2064f8fe64af")
     }}
@@ -11,7 +11,6 @@
         {{ if .attributes.Bilde.data }}
         {{ $url := .attributes.Bilde.data.attributes.formats.medium.url}}
         {{$test := print "https://strapi-production-7261.up.railway.app" $url}}
-        {{$test}}
         <img src="{{$test}}">
         {{ end }}
         {{end}}

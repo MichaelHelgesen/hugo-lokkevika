@@ -13,5 +13,9 @@
         {{$test := print "https://strapi-production-4b65.up.railway.app" $url}}
         <img src="{{$url}}">
         {{ end }}
+        <br><h2>Varer:</h2>
+        {{ range .attributes.Varer }}
+        <div>{{ .Tittel }}</div>
+        {{ end }}
         {{end}}
     {{ end }}

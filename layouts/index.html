@@ -6,12 +6,12 @@
     {{ with $resource }}
         {{ $data := unmarshal .Content }}
         {{range $data.data}}
-        {{.}}
-        {{.attributes.Menytittel}}
-        {{ if .attributes.Bilde.data }}
-        {{ $url := .attributes.Bilde.data.attributes.formats.medium.url}}
-        {{$test := print "https://strapi-production-7261.up.railway.app" $url}}
-        <img src="{{$test}}">
+        {{.attributes.Tittel}}
+        {{ if .attributes.Ikon.data }}
+        {{ $url := .attributes.Ikon.data.attributes.formats.medium.url}}
+        {{ $url }}
+        {{$test := print "https://strapi-production-4b65.up.railway.app" $url}}
+        <img src="{{$url}}">
         {{ end }}
         {{end}}
     {{ end }}

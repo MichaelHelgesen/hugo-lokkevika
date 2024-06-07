@@ -1,0 +1,10 @@
+:root {
+    --base-color: hsl(47, 37%, 93%, 100%);
+    --accent-color: hsl(350, 18%, 54%, 100%);
+    --primary-color: hsl(214, 7%, 20%, 100%);
+    --primary-color-2: hsl(32, 61%, 64%, 100%);
+}
+
+html {
+    background: var(--base-color); 
+}

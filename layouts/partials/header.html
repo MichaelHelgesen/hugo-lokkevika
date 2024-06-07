@@ -1,0 +1,30 @@
+{{ $page := .}}
+<header>
+    <nav>
+        <ul>
+            {{- range site.Menus.main }}
+                {{- $attrs := dict "href" .URL }}
+                {{- if $page.IsMenuCurrent "main" . }}
+                    {{- $attrs = merge $attrs (dict "class" "active" "aria-current" "page") }}
+                {{- else if or ($page.HasMenuCurrent "main" .) (and (strings.Contains $page.Permalink .PageRef) (ne .Name "Hjem"))}}
+                    {{- $attrs = merge $attrs (dict "class" "ancestor" "aria-current" "true") }}
+                {{- end }}
+                {{- $name := .Name }}
+                {{- with .Identifier }}
+                    {{- with T . }}
+                        {{- $name = . }}
+                    {{- end }}
+                {{- end }}
+            <li>
+                <a
+                    {{- range $k, $v := $attrs }}
+                        {{- with $v }}
+                            {{- printf " %s=%q" $k $v | safeHTMLAttr }}
+                        {{- end }}
+                    {{- end -}}
+                >{{ $name }}</a>
+            </li>
+            {{- end }}
+        </ul>
+    </nav>
+</header>

@@ -1,0 +1,32 @@
+baseURL = '/'
+defaultContentLanguage = "nb"
+title = 'Løkkevika Handel'
+
+[menus]
+  [[menus.main]]
+    name = 'Hjem'
+    pageRef = '/'
+    weight = 10
+  [[menus.main]]
+    name = 'Meny'
+    pageRef = '/meny'
+    weight = 20
+  [[menus.main]]
+    name = 'Om Løkkevika Handel'
+    pageRef = '/om-oss'
+    weight = 30
+  [[menus.main]]
+    name = 'Leverandører'
+    pageRef = '/leverandorer'
+    weight = 40
+  [[menus.main]]
+    name = 'Kontakt'
+    pageRef = '/kontakt'
+    weight = 50
+  [[menus.main]]
+    name = 'Åpningstider'
+    pageRef = '/apningstider'
+    weight = 60
+
+[markup]
+  [markup.goldmark]

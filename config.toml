@@ -2,6 +2,10 @@ baseURL = '/'
 defaultContentLanguage = "nb"
 title = 'Løkkevika Handel'
 
+[[module.mounts]]
+    source = "assets"
+    target = "assets"
+
 [menus]
   [[menus.main]]
     name = 'Hjem'
@@ -12,7 +16,7 @@ title = 'Løkkevika Handel'
     pageRef = '/meny'
     weight = 20
   [[menus.main]]
-    name = 'Om Løkkevika Handel'
+    name = 'Om oss'
     pageRef = '/om-oss'
     weight = 30
   [[menus.main]]

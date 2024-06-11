@@ -1,35 +1,130 @@
 {{ define "main" }}
-{{ $strapi_single_types := "https://strapi-production-4b65.up.railway.app/api/side-hjem?populate=*" }}
+{{ $strapi_single_types := print 
+    "https://strapi-production-4b65.up.railway.app/api/side-hjem?populate[0]=Hero.Bilde" 
+    "&" 
+    "populate[1]=Innehaverne"
+    "&"
+    "populate[2]=Bilde_Fullbredde.Bilde"
+    "&"
+    "populate[3]=Meny"
+    "&"
+    "populate[4]=Salgspunkter"
+    "&"
+    "populate[5]=Bilde_Fullbredde_2.Bilde"
+    "&"
+    "populate[6]=Referanser"
+    "&"
+    "populate[8]=Tjeneste.Ikon"
+    "&"
+    "populate[9]=Referanse.Bilde"
+    "&"
+    "populate[10]=Moteplass.Bakgrunnsbilde"
+}}
 {{ $strapi_collection_meny := "https://strapi-production-4b65.up.railway.app/api/menies?populate=*" }}
 {{ $opts := dict
     "headers" (dict "Authorization" "Bearer 35428451d9c783d7c30b79700cb687aeac3bcd3988a5af0ff13db2c888c5664026e9ed47ce2484789ec41d61f478ea72428c96d36d00145f5dbabe54053bf97f31b0f385d72be2af38a55b36ec8c17a79d8a3b96941344c36e7f5e0e8645ad1bfbdbf63243ec6f9d2e4410bce3c2576fecbbdf37a5a05f334a48c46bfd33ce02")
 }}
 {{ $components := resources.GetRemote $strapi_single_types $opts | unmarshal }}
-{{ $meny := resources.GetRemote $strapi_collection_meny $opts }}
+{{ $meny_liste := resources.GetRemote $strapi_collection_meny $opts }}
 
-{{ $hero := $components.data.attributes.Hero}}
-{{ $innehaverne := $components.data.attributes.Innehaverne }}
-
+{{ $comp_data := $components.data.attributes }}
+{{ $hero := $comp_data.Hero}}
+{{ $hero_bilde := $comp_data.Hero.Bilde.data.attributes.formats.medium.url}}
+{{ $innehaverne := $comp_data.Innehaverne }}
+{{ $bilde_fullbredde_1 := $comp_data.Bilde_Fullbredde.Bilde.data.attributes.formats.medium.url }}
+{{ $meny := $comp_data.Meny }}
+{{ $salgspunkter := $comp_data.Salgspunkter }}
+{{ $bilde_fullbredde_2 := $comp_data.Bilde_Fullbredde_2.Bilde.data.attributes.formats.medium.url }}
+{{ $referanser := $comp_data.Referanser }}
+{{ $moteplass := $comp_data.Moteplass }}
+{{ $tjenesteliste := $comp_data.Tjeneste }}
+{{ $referanseliste := $comp_data.Referanse }}
 
     <div class="hero">
-        {{ $hero.Tittel }}
+        <div class="hero--wrapper">
+            <div class="hero--content" >
+                <div>
+                    <h1>{{ $hero.Tittel }}</h1>
+                    <p>{{ $hero.Introtekst}}</p>
+                    <div class="hero--content_buttons">
+                        <a href="{{ relURL "/apningstider" }}" class="button inverted">Åpningstider</a>
+                        <a href="{{ relURL "/meny" }}" class="button outline">Meny</a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero--image" style="background-image: url('{{ $hero_bilde }}')">
+            </div>
+        </div>
     </div>
-    <div class="innehaverne">
-        {{ $innehaverne.Tittel }}
+    <div class="innehaverne" style="background-image: url('{{ (resources.Get "/bilder/innehaverne.png").RelPermalink }} ')">
+        <div class="innehaverne--content">
+            <h2>{{ $innehaverne.Tittel }}</h2>
+            <p>{{ $innehaverne.Tekst }}</p>
+            <a class="button">Vår filosofi</a>
+        </div>
+        <div class="innehaverne--image">
+        </div>
     </div>
-    {{ with $meny }}
-        {{ $data := unmarshal .Content }}
-        {{range $data.data}}
-        {{.attributes.Tittel}}
-        {{ if .attributes.Ikon.data }}
-        {{ $url := .attributes.Ikon.data.attributes.formats.medium.url}}
-        {{$test := print "https://strapi-production-4b65.up.railway.app" $url}}
-        <img src="{{$url}}">
-        {{ end }}
-        <br><h2>Varer:</h2>
-        {{ range .attributes.Varer }}
-        <div>{{ .Tittel }}</div>
-        {{ end }}
-        {{end}}
-    {{ end }}
-    {{ end }}
+    <div class="bilde_fullbredde" style="background-image: url('{{ $bilde_fullbredde_1 }}">
+    </div>
+    <div class="meny">
+        <div class="meny--wrap">
+            <h2>{{ $meny.Tittel }}</h2>        
+            <div class="meny--liste">
+                {{ with $meny_liste }}
+                    {{ $data := unmarshal .Content }}
+                    {{range $data.data}}
+                        <div class="meny--liste_enhet">
+                            {{ if .attributes.Ikon.data }}
+                                {{ $url := .attributes.Ikon.data.attributes.formats.medium.url}}
+                                <div class="meny--liste_enhet--image-wrapper" style="background-image: url('{{ $url }}')">
+                                </div>
+                                <a href="/meny" class="button">{{.attributes.Tittel}}</a>
+                            {{ end }}
+                        </div>
+                    {{end}}
+                {{ end }}
+            </div>
+        </div>
+    </div>
+    <div class="salgspunkter">
+        <h2>{{ $salgspunkter.Tittel }}</h2>
+        <div class="salgspunkter--liste">
+                {{range $tjenesteliste}}
+                    <div class="salgspunkter--liste_enhet">
+                        {{ $url := .Ikon.data.attributes.url}}
+                        <div class="salgspunkter--liste_enhet--ikon">
+                            <img src="{{$url}}">
+                        </div>
+                        <h3>{{.Tittel}}</h3>
+                        <p>{{ .Beskrivelse }}</p>
+                    </div>
+                {{end}}
+        </div>
+    </div>
+    <div class="bilde_fullbredde" style="background-image: url('{{ $bilde_fullbredde_2 }}">
+    </div>
+    <div class="referanser">
+        <div class="referanser--wrap">
+            <h2>{{ $referanser.Tittel }}</h2>
+            <div class="referanser--liste">
+                    {{range $referanseliste}}
+                        <div class="referanser--liste_enhet">
+                            {{ $url := .Bilde.data.attributes.formats.medium.url}}
+                            <div class="referanser--liste_enhet--bilde-wrap" style="background-image:url('{{ $url }}')"></div>
+                            <h3>{{.Tittel}}</h3>
+                        </div>
+                    {{end}}
+            </div>
+            <a class="button" href="/meny">Se menyen</a>
+        </div>
+    </div>
+    <div class="moteplass" style="background-image: url('{{ $moteplass.Bakgrunnsbilde.data.attributes.formats.medium.url }}">
+        <div class="moteplass--wrapper">
+            <div class="moteplass--content">
+                <h2>{{ $moteplass.Tittel}}</h2>
+                <p>{{ $moteplass.Tekst }}</p>
+            </div>
+        </div>
+    </div>
+{{ end }}

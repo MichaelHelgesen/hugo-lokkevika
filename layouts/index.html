@@ -75,8 +75,8 @@
                     {{ $data := unmarshal .Content }}
                     {{range $data.data}}
                         <div class="meny--liste_enhet">
-                            {{ if .attributes.Ikon.data }}
-                                {{ $url := .attributes.Ikon.data.attributes.formats.medium.url}}
+                            {{ if .attributes.Bilde.data }}
+                                {{ $url := .attributes.Bilde.data.attributes.formats.medium.url}}
                                 <div class="meny--liste_enhet--image-wrapper" style="background-image: url('{{ $url }}')">
                                 </div>
                                 <a href="/meny" class="button">{{.attributes.Tittel}}</a>
@@ -93,7 +93,7 @@
                 {{range $tjenesteliste}}
                     <div class="salgspunkter--liste_enhet">
                         {{ $url := .Ikon.data.attributes.url}}
-                        <div class="salgspunkter--liste_enhet--ikon">
+                        <div class="ikon">
                             <img src="{{$url}}">
                         </div>
                         <h3>{{.Tittel}}</h3>

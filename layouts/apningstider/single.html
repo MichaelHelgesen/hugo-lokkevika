@@ -1,0 +1,48 @@
+{{ define "main" }}
+
+{{ $strapi_single_types := print "https://strapi-production-4b65.up.railway.app/api/side-apningstider?populate[0]=Topp.Bakgrunnsbilde"
+    "&"
+    "populate[1]=Tekst_enspalte"
+}}
+{{ $opts := dict
+    "headers" (dict "Authorization" "Bearer 35428451d9c783d7c30b79700cb687aeac3bcd3988a5af0ff13db2c888c5664026e9ed47ce2484789ec41d61f478ea72428c96d36d00145f5dbabe54053bf97f31b0f385d72be2af38a55b36ec8c17a79d8a3b96941344c36e7f5e0e8645ad1bfbdbf63243ec6f9d2e4410bce3c2576fecbbdf37a5a05f334a48c46bfd33ce02")
+}}
+
+{{ $strapi_collection_datoer := "https://strapi-production-4b65.up.railway.app/api/apningstiders?populate=*" }}
+{{ $dato_liste := resources.GetRemote $strapi_collection_datoer $opts | unmarshal }}
+{{ $components := resources.GetRemote $strapi_single_types $opts | unmarshal }}
+{{ $comp_data := $components.data.attributes }}
+{{ $title := $comp_data.Topp.Tittel}}
+{{ $hero_bilde := $comp_data.Topp.Bakgrunnsbilde.data.attributes.formats.medium.url}}
+{{ $ingres := $comp_data.Topp.Beskrivelse }}
+
+{{ $tekst := $comp_data.Tekst_enspalte }}
+{{ partial "top.html" (dict "title" $title "img" $hero_bilde "ingres" $ingres) }}
+    <div class="apningstider">
+        <div class="apningstider--wrapper">
+            <div class="apningstider--tekst">
+                <h2>{{ $tekst.Tittel }}</h2>
+                {{ $tekst.Tekst | markdownify}}
+            </div>
+            <div class="datoer">
+                {{ range $dato_liste }}
+                    {{ range . }}
+                    <div>
+                    <h3>{{.attributes.Tittel}}</h3>
+                    <div class="dato--wrap">
+                        {{ range .attributes.Datoer }}
+                        <div class="day--wrap">
+                            <div class="dato">{{ .Dato }}.</div>
+                            <div class="tekst">{{ .Tekst }}</div>
+                        </div>
+                        {{ end }}
+                    </div>
+                    </div>
+                    {{ end }}
+                {{ end }}
+            </div>
+    </div>
+{{ end }}
+
+
+

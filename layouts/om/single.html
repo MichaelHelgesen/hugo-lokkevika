@@ -1,0 +1,124 @@
+{{ define "main" }}
+
+{{ $strapi_single_types := print "https://strapi-production-4b65.up.railway.app/api/side-om?populate[0]=Topp.Bakgrunnsbilde"
+   "&"
+   "populate[1]=Bilde_topp.Bakgrunnsbilde"
+   "&"
+   "populate[2]=Tospalte"
+   "&"
+   "populate[3]=Bilderad1.Bilde1"
+   "&"
+   "populate[4]=Bilderad1.Bilde2"
+   "&"
+   "populate[5]=Bilderad1.Bilde3"
+   "&"
+   "populate[6]=Tekst_med_sitat"
+   "&"
+   "populate[7]=Fremhevet_tekst.Bilde"
+   "&"
+   "populate[8]=Tekst_med_sitat2.Bilde"
+   "&"
+   "populate[9]=Bilderad2.Bilde1"
+   "&"
+   "populate[10]=Bilderad2.Bilde2"
+   "&"
+   "populate[11]=Bilderad2.Bilde3"
+   "&"
+   "populate[12]=Tekst_enspalte"
+   "&"
+   "populate[13]=Tekst_pa_bilde.Bilde"
+}}
+{{ $strapi_collection_meny := "https://strapi-production-4b65.up.railway.app/api/menies?populate=*" }}
+{{ $opts := dict
+    "headers" (dict "Authorization" "Bearer 35428451d9c783d7c30b79700cb687aeac3bcd3988a5af0ff13db2c888c5664026e9ed47ce2484789ec41d61f478ea72428c96d36d00145f5dbabe54053bf97f31b0f385d72be2af38a55b36ec8c17a79d8a3b96941344c36e7f5e0e8645ad1bfbdbf63243ec6f9d2e4410bce3c2576fecbbdf37a5a05f334a48c46bfd33ce02")
+}}
+{{ $components := resources.GetRemote $strapi_single_types $opts | unmarshal }}
+{{ $meny_liste := resources.GetRemote $strapi_collection_meny $opts | unmarshal}}
+
+{{ $comp_data := $components.data.attributes }}
+{{ $title := $comp_data.Topp.Tittel}}
+{{ $hero_bilde := $comp_data.Topp.Bakgrunnsbilde.data.attributes.formats.medium.url}}
+{{ $ingres := $comp_data.Topp.Beskrivelse }}
+{{ $toppbilde := $comp_data.Bilde_topp.Bakgrunnsbilde.data.attributes.formats.medium.url}}
+{{ $topptittel := $comp_data.Bilde_topp.Tittel }}
+{{ $tospalte := $comp_data.Tospalte.Tekst }}
+{{ $bilderad_1_bilde_1 := $comp_data.Bilderad1.Bilde1.data.attributes.formats.medium.url }}
+{{ $bilderad_1_bilde_2 := $comp_data.Bilderad1.Bilde2.data.attributes.formats.medium.url }}
+{{ $bilderad_1_bilde_3 := $comp_data.Bilderad1.Bilde3.data.attributes.formats.medium.url }}
+{{ $bilderad_2_bilde_1 := $comp_data.Bilderad2.Bilde1.data.attributes.formats.medium.url }}
+{{ $bilderad_2_bilde_2 := $comp_data.Bilderad2.Bilde2.data.attributes.formats.medium.url }}
+{{ $bilderad_2_bilde_3 := $comp_data.Bilderad2.Bilde3.data.attributes.formats.medium.url }}
+{{ $tekst_med_sitat := $comp_data.Tekst_med_sitat }}
+{{ $tekst_med_sitat_bilde := $comp_data.Tekst_med_sitat.Bilde.data.attributes.formats.thumbnail.url }}
+{{ $fremhevet_tekst := $comp_data.Fremhevet_tekst }}
+{{ $fremhevet_tekst_bilde := $comp_data.Fremhevet_tekst.Bilde.data.attributes.formats.medium.url }}
+{{ $tekst_med_sitat2 := $comp_data.Tekst_med_sitat2 }}
+{{ $tekst_med_sitat2_bilde := $comp_data.Tekst_med_sitat2.Bilde.data.attributes.formats.thumbnail.url }}
+{{ $enspalte := $comp_data.Tekst_enspalte.Tekst }}
+{{ $tekst_pa_bilde := $comp_data.Tekst_pa_bilde }}
+{{ $tekst_pa_bilde_bilde := $comp_data.Tekst_pa_bilde.Bilde.data.attributes.formats.medium.url }}
+{{ partial "top.html" (dict "title" $title "img" $hero_bilde "ingres" $ingres) }}
+<div class="om--wrapper">
+    <div class="toppbilde" style="background-image: url('{{ $toppbilde }}')">
+        <h2 class="sans">{{ $topptittel}}</h2>
+    </div>
+    <div class="tospalte">
+        <p>{{ $tospalte }}</p>
+    </div>
+    <div class="bilderekke">
+        <div class="bilderekke--wrap" style="background-image: url('{{ $bilderad_1_bilde_1 }}')">
+        </div>
+        <div class="bilderekke--wrap" style="background-image: url('{{ $bilderad_1_bilde_2 }}')">
+        </div>
+        <div class="bilderekke--wrap" style="background-image: url('{{ $bilderad_1_bilde_3 }}')">
+        </div>
+    </div>
+    <div class="sitat">
+        <div class="sitat_tekst">{{ $tekst_med_sitat.Tekst | markdownify }}</div>
+        <div class="sitat_bilde">
+            {{ with $tekst_med_sitat_bilde }}
+            <img src="{{ $tekst_med_sitat_bilde }}" />
+            {{ end }}
+            <p>{{ $tekst_med_sitat.Sitat }}</p>
+        </div>
+    </div>
+    <div class="fremhevet">
+        <div class="fremhevet--wrapper">
+            <div class="fremhevet--tekst">
+                <h2>{{ $fremhevet_tekst.Tittel }}</h2>
+                {{ $fremhevet_tekst.Tekst | markdownify}}
+            </div>
+        <div class="fremhevet--bilde" style="background-image:url('{{ $fremhevet_tekst_bilde }}')">
+            <img src="{{ $fremhevet_tekst_bilde }}" />
+        </div>
+        </div>
+    </div>
+    {{ if not $tekst_med_sitat2.Venstrejustert }}
+    <div class="sitat hoyre">
+        <div class="sitat_tekst">{{ $tekst_med_sitat2.Tekst | markdownify }}</div>
+        <div class="sitat_bilde">
+            {{ with $tekst_med_sitat2_bilde }}
+            <img src="{{ $tekst_med_sitat2_bilde }}" />
+            {{ end }}
+            <p>{{ $tekst_med_sitat2.Sitat }}</p>
+        </div>
+    </div>
+    <div class="tekst-i-bilde" style="background-image:url({{ $tekst_pa_bilde_bilde }})">
+        <div>{{ $tekst_pa_bilde.Tekst | markdownify }}</div> 
+    </div>
+    <div class="enspalte">
+        <div>
+        {{ $enspalte | markdownify }}
+        </div>
+    </div>
+    <div class="bilderekke">
+        <div class="bilderekke--wrap" style="background-image: url('{{ $bilderad_2_bilde_1 }}')">
+        </div>
+        <div class="bilderekke--wrap" style="background-image: url('{{ $bilderad_2_bilde_2 }}')">
+        </div>
+        <div class="bilderekke--wrap" style="background-image: url('{{ $bilderad_2_bilde_3 }}')">
+        </div>
+    </div>
+    {{ end }}
+{{ end }}
+

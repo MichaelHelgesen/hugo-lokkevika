@@ -20,10 +20,10 @@
     {{ range $meny_liste.data }}
         <div class="meny--wrapper">
             <div class="tittel">
-                <div class="ikon">
+                <div class="ikon" id="{{ .id }}">
                     <img src="{{ .attributes.Ikon.data.attributes.url }}" /> 
                 </div>
-                <h3 id="{{ .id }}">{{ .attributes.Tittel }}</h3>
+                <h3>{{ .attributes.Tittel }}</h3>
             </div>
             {{ range .attributes.Varer }}
                 <div class="meny--wrapper_enhet">

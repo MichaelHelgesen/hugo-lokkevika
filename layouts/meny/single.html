@@ -22,7 +22,7 @@
                 <div class="ikon">
                     <img src="{{ .attributes.Ikon.data.attributes.url }}" /> 
                 </div>
-                <h3>{{ .attributes.Tittel }}</h3>
+                <h3 id="{{ .id }}">{{ .attributes.Tittel }}</h3>
             </div>
             {{ range .attributes.Varer }}
                 <div class="meny--wrapper_enhet">

@@ -60,7 +60,7 @@
         <div class="innehaverne--content">
             <h2>{{ $innehaverne.Tittel }}</h2>
             <p>{{ $innehaverne.Tekst }}</p>
-            <a class="button">Vår filosofi</a>
+            <a class="button" href="/om-oss">Vår filosofi</a>
         </div>
         <div class="innehaverne--image">
         </div>
@@ -79,7 +79,7 @@
                                 {{ $url := .attributes.Bilde.data.attributes.formats.medium.url}}
                                 <div class="meny--liste_enhet--image-wrapper" style="background-image: url('{{ $url }}')">
                                 </div>
-                                <a href="/meny" class="button">{{.attributes.Tittel}}</a>
+                                <a href="/meny#{{ .id }}" class="button">{{.attributes.Tittel}}</a>
                             {{ end }}
                         </div>
                     {{end}}

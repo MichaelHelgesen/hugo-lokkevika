@@ -222,7 +222,12 @@ footer .copyright {
 }
 
 footer .email {
+    color: var(--base-color);
     font-size: .85rem;
+}
+
+footer .email a {
+    color: var(--base-color);
 }
 
 footer .menu {
@@ -919,7 +924,7 @@ main {
 }
 
 .meny--wrapper .ikon img {
-    width: 40px;
+    width: 33px;
     height: auto;
 }
 
@@ -1144,7 +1149,7 @@ main {
 }
 
 .salgspunkter--liste img {
-    height: 40px;
+    height: 32px;
     width: auto;
 }
 

@@ -74,7 +74,10 @@
         </div>
     </div>
     <div class="sitat">
-        <div class="sitat_tekst">{{ $tekst_med_sitat.Tekst | markdownify }}</div>
+        <div class="sitat_tekst">
+            {{ $tekst_med_sitat.Tekst | markdownify }}
+            <a class="button" href="/leverandorer">Våre leverandører</a>
+        </div>
         <div class="sitat_bilde">
             {{ with $tekst_med_sitat_bilde }}
             <img src="{{ $tekst_med_sitat_bilde }}" />

@@ -41,7 +41,8 @@
 {{ $referanseliste := $comp_data.Referanse }}
 
     <div class="hero">
-        <div class="hero--wrapper">
+        <div class="hero--wrapper" >
+            <div class="absolute" style="background: url('{{ (resources.Get "/bilder/blomst.png").RelPermalink }}')"></div>
             <div class="hero--content" >
                 <div>
                     <h1>{{ $hero.Tittel }}</h1>
@@ -68,6 +69,7 @@
     <div class="bilde_fullbredde" style="background-image: url('{{ $bilde_fullbredde_1 }}">
     </div>
     <div class="meny">
+            <div class="absolute" style="background: url('{{ (resources.Get "/bilder/blomster-bg.jpeg").RelPermalink }}')"></div>
         <div class="meny--wrap">
             <h2>{{ $meny.Tittel }}</h2>        
             <div class="meny--liste">
@@ -94,7 +96,7 @@
                     <div class="salgspunkter--liste_enhet">
                         {{ $url := .Ikon.data.attributes.url}}
                         <div class="ikon">
-                            <img src="{{$url}}">
+                            <img loading=”lazy” src="{{$url}}">
                         </div>
                         <h3>{{.Tittel}}</h3>
                         <p>{{ .Beskrivelse }}</p>

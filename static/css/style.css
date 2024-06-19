@@ -52,6 +52,19 @@
     }
 }
 
+.apningstider {
+    position: relative;
+}
+
+.apningstider .absolute {
+    background-size: 50%!important;
+    opacity: .03;
+    position: absolute;
+    top:0;
+    bottom:0;
+    left: 0;
+    right: 0;
+}
 .apningstider--tekst {
     margin: 0 auto;
     max-width: var(--max-width);
@@ -200,6 +213,19 @@ footer .address > div {
     display: flex;
     flex-direction: column;
     gap: 24px;
+    position: relative;
+}
+
+.address > div .absolute {
+    background-repeat: no-repeat!important;
+    background-size: 50%!important;
+    background-position: bottom right!important;
+    opacity: .2;
+    position: absolute;
+    top:0;
+    bottom:0;
+    left: 0;
+    right: 0;
 }
 
 footer .img {
@@ -624,7 +650,19 @@ header nav a.active:hover {
     display: flex;
     flex-direction: column-reverse;
     padding: 0 var(--padding-desktop);
+    position: relative;
     width: 100%;
+}
+
+.hero--wrapper .absolute {
+    background-repeat: no-repeat!important;
+    background-size: cover!important;
+    opacity: .05;
+    position: absolute;
+    top:0;
+    bottom:0;
+    left: 0;
+    right: 0;
 }
 
 .hero--image {
@@ -634,10 +672,10 @@ header nav a.active:hover {
     display: flex;
     height: 40vw;
     margin: 0 calc(0px - var(--padding-desktop));
+    z-index: 1;
 }
 
 .hero--content {
-    background: var(--accent-color);
     margin: 0 calc(0px - var(--padding-desktop)) 0 calc(0px - var(--padding-desktop));
     max-width: 767px;
     padding: 40px var(--padding-desktop);
@@ -778,7 +816,9 @@ header nav a.active:hover {
     max-width: 750px;
     padding: var(--section-padding) var(--padding-desktop);
     text-align: center;
+    position: relative;
 }
+
 
 .kontakt h3 {
     margin-top: 32px;
@@ -794,6 +834,7 @@ header nav a.active:hover {
    flex-wrap: wrap;
    gap: 32px;
    justify-content: center;
+   z-index: 2;
 }
 
 .kontakt .some {
@@ -803,6 +844,11 @@ header nav a.active:hover {
     gap: 16px;
     justify-content: center;
 }
+
+.kontakt--wrapper {
+    z-index: 2;
+}
+
 .leverandor--wrapper {
     display: flex;
     flex-direction: column;
@@ -854,6 +900,18 @@ main {
 
 .meny {
     background: var(--base-color-2);
+    position: relative;
+}
+
+.meny .absolute {
+    background-repeat: no-repeat!important;
+    background-size: cover!important;
+    opacity: .1;
+    position: absolute;
+    top:0;
+    bottom:0;
+    left: 0;
+    right: 0;
 }
 
 .meny h2 {
@@ -867,6 +925,8 @@ main {
     margin: 0 auto;
     max-width: var(--max-width);
     padding: var(--section-padding) var(--padding-desktop);
+    position: relative;
+    z-index: 2;
 }
 
 .meny--liste {
@@ -910,6 +970,17 @@ main {
     display: flex;
     flex-direction: column;
     padding: 0 var(--padding-desktop) var(--section-padding)  var(--padding-desktop);
+    position: relative;
+}
+
+.meny--page .absolute {
+    background-size: 50%!important;
+    opacity: .03;
+    position: absolute;
+    top:0;
+    bottom:0;
+    left: 0;
+    right: 0;
 }
 
 .meny--wrapper {
@@ -917,6 +988,7 @@ main {
     max-width: 760px;
     padding-top: var(--section-padding);
     width: 100%;
+    z-index: 2;
 }
 
 .meny--wrapper .ikon {

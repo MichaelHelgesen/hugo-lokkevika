@@ -24,15 +24,16 @@
             <div class="logo">
                 <img src="{{ (resources.Get "/logo/lokkevika-handel-logo-white.svg").RelPermalink }}" />
             </div>
-            <p>
+            <p style="z-index:2;">
                 <b>Vår lokasjon:</b><br/>
                 {{ $kontakt.data.attributes.Gateadresse }}  {{ $kontakt.data.attributes.Gatenummer }}</br>
                 {{ $kontakt.data.attributes.Postnummer}} {{ $kontakt.data.attributes.Poststed }}
 
             </p>
 
-            <a class="button inverted" href="/apningstider">Åpningstider</a>
-            <a class="button inverted" href="/kontakt">Kontakt oss</a>
+            <a style="z-index:2;" class="button inverted" href="/apningstider">Åpningstider</a>
+            <a style="z-index:2;" class="button inverted" href="/kontakt">Kontakt oss</a>
+            <div  class="absolute" style="background: url('{{ (resources.Get "/bilder/blomsterkvast.png").RelPermalink }}')"></div>
         </div>
     </div>
     <div class="copyright">

@@ -45,6 +45,7 @@
     --accent-color: hsl(350, 18%, 54%, 100%);
     --accent-color-2: hsl(32, 42%, 53%, 100%);
     --primary-color: hsl(214, 7%, 20%, 100%);
+    --blue-color: #50a8d6;
     --max-width: 1440px;
     --padding-desktop: 24px;
     --font-size-big: 20px;
@@ -112,7 +113,7 @@
 }
 
 .button {
-    background: var(--accent-color);
+    background: var(--blue-color);
     border: none;
     border-radius: 8px;
     color: var(--base-color);
@@ -590,7 +591,7 @@ header nav ul li:last-child a {
     }
 
     header nav ul li:last-child a {
-        background: var(--primary-color);
+        background: var(--blue-color);
         border-radius: 8px;
         color: var(--base-color);
         padding: 4px 16px;
@@ -638,7 +639,7 @@ header nav a {
 }
 */
 header nav a.active {
-    color: var(--accent-color);
+    color: var(--blue-color);
     text-decoration: underline;
 }
 

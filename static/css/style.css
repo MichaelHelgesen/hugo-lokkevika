@@ -26,7 +26,7 @@
 @font-face {
   font-family: 'Merriweather';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 600;
   src: local('Merriweather'),
        url('/fonts/Merriweather-Regular.ttf') format('truetype');
 }
@@ -34,7 +34,7 @@
 @font-face {
   font-family: 'EBGaramond';
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   src: local('EBGaramond'),
        url('/fonts/EBGaramond-VariableFont_wght.ttf') format('truetype');
 }
@@ -113,13 +113,14 @@
 }
 
 .button {
-    background: var(--blue-color);
+    background: var(--accent-color);
     border: none;
     border-radius: 8px;
     color: var(--base-color);
     display: inline-block;
-    font-family: "EBGaramond";
-    padding: 12px 32px;
+    font-family: "Libre Baskerville";
+    font-style:italic;
+    padding: 8px 24px;
     text-decoration: none;
     transition: background .2s ease;
 }
@@ -127,7 +128,7 @@
 .button.inverted {
     background: var(--base-color);
     color: var(--accent-color);
-    padding: 14px 34px;
+    padding: 10px 26px;
 }
 
 .button.outline {
@@ -357,9 +358,9 @@ footer .some {
 }
 
 h1 {
-    font-family: "EBGaramond";
+    font-family: "Libre Baskerville";
     font-size: clamp(40px, 10vw, 56px);
-    font-style: normal;
+    font-style: italic;
     font-weight: 400;
     line-height: 1.2em;
     margin: 0;
@@ -402,7 +403,9 @@ h4 {
 
 html {
     background: var(--base-color); 
-    font-family: "Merriweather";
+    font-family: "Montserrat";
+    font-weight: 400;
+    font-style: regular;
     line-height: 1.6;
 }
 
@@ -591,7 +594,7 @@ header nav ul li:last-child a {
     }
 
     header nav ul li:last-child a {
-        background: var(--blue-color);
+        background: var(--accent-color);
         border-radius: 8px;
         color: var(--base-color);
         padding: 4px 16px;
@@ -599,13 +602,13 @@ header nav ul li:last-child a {
     }
 
     header nav ul li:last-child a:hover {
-        background: var(--accent-color);
+        background: var(--primary-color);
         color: var(--base-color);
         text-decoration: none;
     }
 
     header nav ul li:last-child a.active {
-        background: var(--accent-color);
+        background: var(--primary-color);
     }
 
     header nav ul li:last-child a.active:hover {
@@ -639,7 +642,7 @@ header nav a {
 }
 */
 header nav a.active {
-    color: var(--blue-color);
+    color: var(--accent-color);
     text-decoration: underline;
 }
 

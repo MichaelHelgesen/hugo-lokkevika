@@ -120,7 +120,7 @@
     display: inline-block;
     font-family: "Libre Baskerville";
     font-style:italic;
-    padding: 8px 24px;
+    padding: 8px 32px;
     text-decoration: none;
     transition: background .2s ease;
 }
@@ -128,7 +128,7 @@
 .button.inverted {
     background: var(--base-color);
     color: var(--accent-color);
-    padding: 10px 26px;
+    padding: 10px 34px;
 }
 
 .button.outline {

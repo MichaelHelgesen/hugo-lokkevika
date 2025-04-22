@@ -1,6 +1,7 @@
 baseURL = '/'
 defaultContentLanguage = "nb"
 title = 'Løkkevika Handel'
+timeout = 20000
 
 [[module.mounts]]
     source = "assets"

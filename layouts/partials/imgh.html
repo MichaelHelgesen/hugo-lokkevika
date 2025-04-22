@@ -1,0 +1,68 @@
+{{- $respSizes := slice "640" "960" "1280" "1600" "1920" -}}
+{{ if eq .small "true"}}
+{{ $respSizes = slice "320" "640" "960" "1280" "1600" "1920" -}}
+{{- end -}}
+{{ $data := "" }}
+{{- $imgBd5 := "" -}}
+{{$width := ""}}
+{{$height := ""}}
+{{ $source := .source}}
+{{ $lazy := .lazy }}
+{{ $fade := .fade}}
+{{ if eq .source "ext"}}
+    {{- $imgBd5 = md5 .ctx.name -}}
+    {{$width = .ctx.width}}
+    {{$height = .ctx.height}}
+    {{ $img := resources.GetRemote .ctx.url }} 
+    {{ $img := $img.Content | resources.FromString (print "images/" .ctx.hash ".webp") }} 
+        {{ $data = $img}}
+{{ else }}
+    {{- $imgBd5 = md5 .ctx.Title -}}
+    {{ with resources.Get .src }}
+    {{ $width = .Width}}
+    {{ $height = .Height}}
+    {{$data = .}}
+{{ end }}
+{{end}}
+{{- $src := .ctx -}}
+{{- $alt := .alt -}}
+{{ $ctx := .ctx}}
+{{- $figcaption := .figcaption -}}
+{{- $holder := default "GIP" (.holder) -}}
+{{- $hint := default "photo" (.hint) -}}
+{{- /* ^^ applicable only to webp: https://gohugo.io/content-management/image-processing/#hint */ -}}
+{{- $filter := default false (.filter) -}}
+{{- $divClass := print "relative bg-center imgB-" $imgBd5 "-" $holder -}}
+{{- $imgClass := "w-full h-auto animate-fade" -}}
+{{ if eq $fade "false"}}
+{{ $imgClass = "w-full h-auto" -}}
+{{end}}
+{{- $dataSzes := "(min-width: 1024px) 100vw, 50vw" -}}
+{{- $title := .title -}}
+{{ $actualImg := $data.Resize (printf "%s%s" "640x jpg " $filter) }}
+<figure>
+<div class="{{ $divClass }}">
+	<picture>
+		<source type="image/webp" srcset="
+		{{- with $respSizes -}}
+			{{- range $i, $e := . -}}
+				{{- if ge $width . -}}
+					{{- if $i }}, {{ end -}}{{- ($data.Resize (print . "x webp " $hint " " $filter) ).RelPermalink }} {{ . }}w
+				{{- end -}}
+			{{- end -}}
+		{{- end -}}" sizes="{{ $dataSzes }}" />
+		<source type="image/jpeg" srcset="
+		{{- with $respSizes -}}
+			{{- range $i, $e := . -}}
+				{{- if ge $width . -}}
+					{{- if $i }}, {{ end -}}{{- ($data.Resize (print . "x jpg " $filter) ).RelPermalink }} {{ . }}w
+				{{- end -}}
+			{{- end -}}
+		{{- end -}}" sizes="{{ $dataSzes }}" />
+        <img class="{{ $imgClass }}" src="{{ $actualImg.RelPermalink }}" width="{{ $width }}" height="{{ $height }}" alt="{{ $alt }}" title="{{ $title }}" loading="{{ if eq $lazy "false"}}eager{{ else }}lazy{{end}}" />
+	</picture>
+</div>
+{{- with $figcaption -}}
+<figcaption>{{. | safeHTML}}</figcaption>
+{{- end -}}
+</figure>

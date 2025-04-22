@@ -1,0 +1,41 @@
+@import url("topp.css");
+.kontakt {
+    display: flex;
+    flex-direction:column;
+    gap: 48px;
+    margin: 0 auto;
+    max-width: 750px;
+    padding: var(--section-padding) var(--padding-desktop);
+    text-align: center;
+    position: relative;
+}
+
+
+.kontakt h3 {
+    margin-top: 32px;
+}
+
+.kontakt h3:first-of-type {
+    margin-top: 0;
+}
+
+.kontakt .knapper {
+    align-items:center;
+   display: flex;
+   flex-wrap: wrap;
+   gap: 32px;
+   justify-content: center;
+   z-index: 2;
+}
+
+.kontakt .some {
+    align-items: center;
+    margin-top: 16px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+.kontakt--wrapper {
+    z-index: 2;
+}

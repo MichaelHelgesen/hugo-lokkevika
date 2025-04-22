@@ -1,0 +1,29 @@
+
+{{- $respSizes := slice "640" "960" "1280" "1600" "1920" -}}
+{{ if eq .small "true"}}
+{{ $respSizes = slice "320" "640" "960" "1280" "1600" "1920" -}}
+{{- end -}}
+{{ $data := "" }}
+{{- $imgBd5 := "" -}}
+{{$width := ""}}
+{{$height := ""}}
+{{ $source := .source}}
+{{ $lazy := .lazy }}
+{{ $fade := .fade}}
+{{ if eq .source "ext"}}
+    {{- $imgBd5 = md5 .ctx.name -}}
+    {{$width = .ctx.width}}
+    {{$height = .ctx.height}}
+    {{.ctx.attributes.url}}
+    test
+    {{ $img := "" }} 
+    {{ $img }}
+        {{ $data = $img}}
+{{ else }}
+    {{- $imgBd5 = md5 .ctx.Title -}}
+    {{ with resources.Get .src }}
+    {{ $width = .Width}}
+    {{ $height = .Height}}
+    {{$data = .}}
+{{ end }}
+{{end}}

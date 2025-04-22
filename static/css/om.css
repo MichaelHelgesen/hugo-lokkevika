@@ -1,0 +1,244 @@
+@import url("topp.css");
+
+.bilderekke {
+    display: flex;
+    gap: 32px;
+}
+
+.bilderekke--wrap {
+    display: relative;
+    overflow: hidden;
+    width: 33.33%;
+}
+.bilderekke--wrap figure {
+    position: absoulte;
+    top:0;
+    bottom:0;
+    left: 0;
+    right: 0;
+}
+.bilderekke--wrap figure > div {
+    height: 100%;
+}
+.bilderekke--wrap img {
+    object-fit: cover;
+    aspect-ratio: 3/4;
+}
+.enspalte {
+margin: 0 auto;
+    max-width: calc(var(--max-width) - (var(--padding-desktop)* 2));
+    padding: var(--section-padding) 0;
+}
+
+
+@media only screen and (min-width: 768px) {
+    .enspalte > div {
+        width: 65%;
+    }
+}
+.fremhevet {
+    background: var(--primary-color);
+    margin: 0 calc(0px - var(--padding-desktop));
+    padding: 0 var(--padding-desktop) var(--section-padding) var(--padding-desktop);
+}
+
+
+.fremhevet--bilde {
+    position: relative;
+}
+.fremhevet--bilde figure {
+    overflow: hidden;
+     
+}
+.fremhevet--bilde img {
+
+}
+
+.fremhevet--tekst {
+    color: var(--base-color);
+    padding: var(--section-padding) 0 0 0;
+}
+
+.fremhevet--wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin: 0 auto;
+}
+
+@media only screen and (min-width: 900px) {
+    .fremhevet {
+        padding: 0 0 0 var(--padding-desktop);
+    }
+    .fremhevet--wrapper {
+        flex-direction: row;
+        gap: 64px;
+    }
+
+    .fremhevet--bilde {
+        width: 100%;
+    }
+    .fremhevet--bilde figure {
+        position: absolute;
+        top:0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+    .fremhevet--bilde figure > div {
+        height: 100%;
+    }
+
+    .fremhevet--bilde img {
+        aspect-ratio: 2/1;
+        object-fit: cover;
+    }
+
+    .fremhevet--tekst {
+        padding-bottom: var(--section-padding);
+        width: 50%;
+    }
+}
+
+.om--wrapper {
+    padding: 0 var(--padding-desktop) var(--section-padding)  var(--padding-desktop);
+}
+.sitat {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0 auto;
+    max-width: calc(var(--max-width) - (var(--padding-desktop)* 2));
+    padding: var(--section-padding) 0;
+}
+
+.sitat > div {
+    flex: 1;
+}
+
+.sitat p {
+    white-space: pre-wrap;
+}
+.sitat_bilde figure {
+    height: unset;
+}
+.sitat_bilde img {
+    width: 100%;
+}
+
+.sitat_bilde p {
+    font-family: var(--font-baskerville);
+    font-size: 20px;
+    line-height: 1.6em;
+}
+
+@media only screen and (min-width: 768px) {
+    .sitat {
+        flex-direction: row;
+        gap: 64px;
+    }
+        
+    .sitat.hoyre {
+        flex-direction: row-reverse;
+    }
+}
+.tekst-i-bilde {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin: 0 calc(0px - var(--padding-desktop));
+    position: relative;
+    overflow: hidden;
+}
+
+.tekst-i-bilde figure {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.tekst-i-bilde figure > div {
+    height: 100%;
+}
+
+.tekst-i-bilde img {
+    object-fit: cover;
+}
+
+.tekst-i-bilde > div {
+    position: relative;
+    background: hsl(47, 37%, 93%, 90%);
+    border-radius: 8px 8px 0 0;
+    margin: 600px 24px 0 24px;
+    max-width: 65ch;
+    padding: 24px;
+}
+
+@media only screen and (min-width: 500px) {
+.tekst-i-bilde > div {
+    margin: 400px 24px 0 24px;
+}
+.toppbilde {
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    height: 100vw;
+    justify-content: flex-end;
+    margin: 0 auto;
+    max-width: calc(var(--max-width) - (var(--padding-desktop)*2));
+    max-height: 800px;
+    margin-top: var(--section-padding);
+    overflow: hidden;
+    position: relative;
+}
+
+.toppbilde figure {
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+.toppbilde figure > div {
+    height: 100%;
+}
+
+.toppbilde img {
+    object-fit: cover;
+
+}
+
+.toppbilde h2 {
+    background: hsl(47, 37%, 93%, 90%);
+    border-radius: 0;
+    padding: 24px;
+    position: relative;
+    width: 100%;
+}
+
+.tospalte {
+    margin: 0 auto;
+    max-width: calc(var(--max-width) - (var(--padding-desktop)*2));
+    padding: var(--section-padding) 0;
+}
+
+.tospalte p { 
+    column-count: 1;
+    column-gap: 0;
+    white-space: pre-wrap;
+}
+@media only screen and (min-width: 768px) {
+    .toppbilde h2 {
+        border-radius: 0 16px 0 0;
+        padding: 56px;
+        width: 50%;
+    }
+
+    .tospalte p { 
+        column-count: 2;
+        column-gap: 64px;
+    }
+}

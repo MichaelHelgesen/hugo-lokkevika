@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Løkkevika Handel</title>
+    <link>/</link>
+    <description>Recent content on Løkkevika Handel</description>
+    <generator>Hugo</generator>
+    <language>nb</language>
+    <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Åpningstider</title>
+      <link>/apningstider/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/apningstider/</guid>
+      <description>Åpningstider</description>
+    </item>
+    <item>
+      <title>Kontakt</title>
+      <link>/kontakt/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/kontakt/</guid>
+      <description>Kontakt</description>
+    </item>
+    <item>
+      <title>Leverandører</title>
+      <link>/leverandorer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/leverandorer/</guid>
+      <description>Leverandører</description>
+    </item>
+    <item>
+      <title>meny</title>
+      <link>/meny/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/meny/</guid>
+      <description>Meny</description>
+    </item>
+    <item>
+      <title>Om Løkkevika Handel</title>
+      <link>/om-oss/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/om-oss/</guid>
+      <description>Om Løkkevika handel</description>
+    </item>
+  </channel>
+</rss>

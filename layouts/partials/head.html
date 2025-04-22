@@ -1,12 +1,37 @@
-
+{{- $stylesheet := "" -}}
+ {{ if .IsHome }}
+    {{$stylesheet = print "index.css"}}
+    {{ else if eq .Page.Type "meny"}}
+    {{ $stylesheet = print "meny.css"}}
+    {{ else if eq .Page.Type "om"}}
+    {{ $stylesheet = print "om.css"}}
+    {{ else if eq .Page.Type "leverandorer"}}
+    {{ $stylesheet = print "leverandorer.css" }}
+    {{ else if eq .Page.Type "kontakt"}}
+    {{ $stylesheet = print "kontakt.css" }}
+    {{ else if eq .Page.Type "apningstider"}}
+    {{ $stylesheet = print "apningstider.css" }}
+ {{ end }}
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="{{ relURL "css/style.css" }}" media="all">
- <script src="{{ relURL "js/mobile_menu.js" }}" defer></script>  
+    <link rel="preload" href="{{ relURL "css/style.css" }}" media="screen" type="text/css" as="style">
+    <link rel="stylesheet" href="{{ relURL "css/style.css" }}" media="screen" type="text/css">
+
+    <link rel="preload" href="{{ relURL (print "css/" $stylesheet) }}" media="screen" type="text/css" as="style">
+    <link rel="stylesheet" href="{{ relURL (print "css/" $stylesheet) }}" media="screen" type="text/css">
+ <script src="{{ relURL "js/mobile_menu.js" }}" defer></script> 
+{{ partial "head-img-css"}}
+{{ if eq .Type "kontakt" }}
 <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet">
-<script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js" ></script>
 <style>
 #map { height: 500px; width: 100%; }
 </style>
+{{ end }}
+<!--
+<link rel="preload" href="{{ relURL "css/style.css" }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ relURL "css/style.css" }}"></noscript> -->
  <title>Løkkevika Handel</title>
+ <!-- <link rel="preload" href="{{ relURL (print "css/" $stylesheet) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+ <noscript><link rel="stylesheet" href="{{ relURL (print "css/" $stylesheet) }}"></noscript>-->
 </head> 

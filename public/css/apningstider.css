@@ -1,0 +1,77 @@
+@import url("topp.css");
+
+.apningstider {
+    position: relative;
+}
+
+.apningstider .absolute {
+    background-size: 50%!important;
+    opacity: .03;
+    position: absolute;
+    top:0;
+    bottom:0;
+    left: 0;
+    right: 0;
+}
+.apningstider--tekst {
+    margin: 0 auto;
+    max-width: var(--max-width);
+    padding: var(--section-padding) var(--padding-desktop);
+    text-align: center;
+}
+.datoer {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    margin: 0 auto;
+    max-width: var(--max-width);
+    padding: 0 var(--padding-desktop) var(--padding-desktop) var(--padding-desktop);
+    text-align: center;
+}
+
+.datoer h3 {
+    margin-bottom: 24px;
+}
+
+.datoer .dato--wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.datoer .day--wrap {
+    background: hsl(47, 100%, 98%, 1);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-start;
+    padding: 24px;
+    text-align: left;
+    width: 49%;
+outline: 1px solid var(--primary-color);
+    margin-top: 1px;
+    margin-left: 1px;
+}
+
+@media only screen and (min-width: 500px) {
+    .datoer .day--wrap {
+    width: 33%;
+    }
+}
+
+@media only screen and (min-width: 769px) {
+    .datoer .day--wrap {
+    width: 33%;
+    }
+}
+
+@media only screen and (min-width: 1100px) {
+    .datoer .day--wrap {
+    width: 19%;
+    }
+}
+
+.datoer .dato {
+    font-family: var(--font-baskerville);
+    font-size: 20px;
+}

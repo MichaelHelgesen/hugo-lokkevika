@@ -39,38 +39,42 @@
 {{ $title := $comp_data.Topp.Tittel}}
 {{ $hero_bilde := $comp_data.Topp.Bakgrunnsbilde.data.attributes.formats.medium.url}}
 {{ $ingres := $comp_data.Topp.Beskrivelse }}
-{{ $toppbilde := $comp_data.Bilde_topp.Bakgrunnsbilde.data.attributes.formats.medium.url}}
+{{ $toppbilde := $comp_data.Bilde_topp.Bakgrunnsbilde.data.attributes}}
 {{ $topptittel := $comp_data.Bilde_topp.Tittel }}
 {{ $tospalte := $comp_data.Tospalte.Tekst }}
-{{ $bilderad_1_bilde_1 := $comp_data.Bilderad1.Bilde1.data.attributes.formats.medium.url }}
-{{ $bilderad_1_bilde_2 := $comp_data.Bilderad1.Bilde2.data.attributes.formats.medium.url }}
-{{ $bilderad_1_bilde_3 := $comp_data.Bilderad1.Bilde3.data.attributes.formats.medium.url }}
-{{ $bilderad_2_bilde_1 := $comp_data.Bilderad2.Bilde1.data.attributes.formats.medium.url }}
-{{ $bilderad_2_bilde_2 := $comp_data.Bilderad2.Bilde2.data.attributes.formats.medium.url }}
-{{ $bilderad_2_bilde_3 := $comp_data.Bilderad2.Bilde3.data.attributes.formats.medium.url }}
+{{ $bilderad_1_bilde_1 := $comp_data.Bilderad1.Bilde1.data.attributes }}
+{{ $bilderad_1_bilde_2 := $comp_data.Bilderad1.Bilde2.data.attributes }}
+{{ $bilderad_1_bilde_3 := $comp_data.Bilderad1.Bilde3.data.attributes }}
+{{ $bilderad_2_bilde_1 := $comp_data.Bilderad2.Bilde1.data.attributes }}
+{{ $bilderad_2_bilde_2 := $comp_data.Bilderad2.Bilde2.data.attributes}}
+{{ $bilderad_2_bilde_3 := $comp_data.Bilderad2.Bilde3.data.attributes }}
 {{ $tekst_med_sitat := $comp_data.Tekst_med_sitat }}
 {{ $tekst_med_sitat_bilde := $comp_data.Tekst_med_sitat.Bilde.data.attributes.formats.thumbnail.url }}
 {{ $fremhevet_tekst := $comp_data.Fremhevet_tekst }}
-{{ $fremhevet_tekst_bilde := $comp_data.Fremhevet_tekst.Bilde.data.attributes.formats.medium.url }}
+{{ $fremhevet_tekst_bilde := $comp_data.Fremhevet_tekst.Bilde.data.attributes}}
 {{ $tekst_med_sitat2 := $comp_data.Tekst_med_sitat2 }}
-{{ $tekst_med_sitat2_bilde := $comp_data.Tekst_med_sitat2.Bilde.data.attributes.formats.thumbnail.url }}
+{{ $tekst_med_sitat2_bilde := $comp_data.Tekst_med_sitat2.Bilde.data.attributes}}
 {{ $enspalte := $comp_data.Tekst_enspalte.Tekst }}
 {{ $tekst_pa_bilde := $comp_data.Tekst_pa_bilde }}
-{{ $tekst_pa_bilde_bilde := $comp_data.Tekst_pa_bilde.Bilde.data.attributes.formats.medium.url }}
-{{ partial "top.html" (dict "title" $title "img" $hero_bilde "ingres" $ingres) }}
+{{ $tekst_pa_bilde_bilde := $comp_data.Tekst_pa_bilde.Bilde.data.attributes }}
+{{ partial "top.html" (dict "meny" $meny_liste "title" $title "img" $comp_data.Topp.Bakgrunnsbilde.data.attributes "ingres" $ingres) }}
 <div class="om--wrapper">
-    <div class="toppbilde" style="background-image: url('{{ $toppbilde }}')">
+    <div class="toppbilde">
+        {{ partial "imgh" (dict "ctx" $toppbilde "src" $toppbilde.resources.url "alt" $toppbilde.assets.context.alt "holder" "LQTIP" "title" $toppbilde.assets.context.caption "source" "ext" "lazy" "false" "fade" "false")}}
         <h2 class="sans">{{ $topptittel}}</h2>
     </div>
     <div class="tospalte">
         <p>{{ $tospalte }}</p>
     </div>
     <div class="bilderekke">
-        <div class="bilderekke--wrap" style="background-image: url('{{ $bilderad_1_bilde_1 }}')">
+        <div class="bilderekke--wrap">
+        {{ partial "imgh" (dict "ctx" $bilderad_1_bilde_1 "src" $bilderad_1_bilde_1.assets.url "alt" $bilderad_1_bilde_1.assets.context.alt "holder" "LQTIP" "title" $bilderad_1_bilde_1.assets.context.caption "source" "ext" "small" "true")}}
         </div>
-        <div class="bilderekke--wrap" style="background-image: url('{{ $bilderad_1_bilde_2 }}')">
+        <div class="bilderekke--wrap">
+        {{ partial "imgh" (dict "ctx" $bilderad_1_bilde_2 "src" $bilderad_1_bilde_2.assets.url "alt" $bilderad_1_bilde_2.assets.context.alt "holder" "LQTIP" "title" $bilderad_1_bilde_2.assets.context.caption "source" "ext" "small" "true")}}
         </div>
-        <div class="bilderekke--wrap" style="background-image: url('{{ $bilderad_1_bilde_3 }}')">
+        <div class="bilderekke--wrap">
+        {{ partial "imgh" (dict "ctx" $bilderad_1_bilde_3 "src" $bilderad_1_bilde_3.assets.url "alt" $bilderad_1_bilde_3.assets.context.alt "holder" "LQTIP" "title" $bilderad_1_bilde_3.assets.context.caption "source" "ext" "small" "true")}}
         </div>
     </div>
     <div class="sitat">
@@ -91,22 +95,27 @@
                 <h2>{{ $fremhevet_tekst.Tittel }}</h2>
                 {{ $fremhevet_tekst.Tekst | markdownify}}
             </div>
-        <div class="fremhevet--bilde" style="background-image:url('{{ $fremhevet_tekst_bilde }}')">
-            <img src="{{ $fremhevet_tekst_bilde }}" />
+        <div class="fremhevet--bilde">
+        {{ partial "imgh" (dict "ctx" $fremhevet_tekst_bilde "src" $fremhevet_tekst_bilde.assets.url "alt" $fremhevet_tekst_bilde.assets.context.alt "holder" "LQTIP" "title" $fremhevet_tekst_bilde.assets.context.caption "source" "ext")}}
         </div>
         </div>
     </div>
     {{ if not $tekst_med_sitat2.Venstrejustert }}
+    <div class="sitat">
+        {{ else }}
+
     <div class="sitat hoyre">
+    {{ end }}
         <div class="sitat_tekst">{{ $tekst_med_sitat2.Tekst | markdownify }}</div>
         <div class="sitat_bilde">
             {{ with $tekst_med_sitat2_bilde }}
-            <img src="{{ $tekst_med_sitat2_bilde }}" />
+        {{ partial "imgh" (dict "ctx" $tekst_med_sitat2_bilde "src" $tekst_med_sitat2_bilde.assets.url "alt" $tekst_med_sitat2_bilde.assets.context.alt "holder" "LQTIP" "title" $tekst_med_sitat2_bilde.assets.context.caption "source" "ext")}}
             {{ end }}
             <p>{{ $tekst_med_sitat2.Sitat }}</p>
         </div>
     </div>
     <div class="tekst-i-bilde" style="background-image:url({{ $tekst_pa_bilde_bilde }})">
+        {{ partial "imgh" (dict "ctx" $tekst_pa_bilde_bilde "src" $tekst_pa_bilde_bilde.assets.url "alt" $tekst_pa_bilde_bilde.assets.context.alt "holder" "LQTIP" "title" $tekst_pa_bilde_bilde.assets.context.caption "source" "ext")}}
         <div>{{ $tekst_pa_bilde.Tekst | markdownify }}</div> 
     </div>
     <div class="enspalte">
@@ -115,13 +124,15 @@
         </div>
     </div>
     <div class="bilderekke">
-        <div class="bilderekke--wrap" style="background-image: url('{{ $bilderad_2_bilde_1 }}')">
+        <div class="bilderekke--wrap">
+        {{ partial "imgh" (dict "ctx" $bilderad_2_bilde_1 "src" $bilderad_2_bilde_1.assets.url "alt" $bilderad_2_bilde_1.assets.context.alt "holder" "LQTIP" "title" $bilderad_2_bilde_1.assets.context.caption "source" "ext" "small" "true")}}
         </div>
-        <div class="bilderekke--wrap" style="background-image: url('{{ $bilderad_2_bilde_2 }}')">
+        <div class="bilderekke--wrap">
+        {{ partial "imgh" (dict "ctx" $bilderad_2_bilde_2 "src" $bilderad_2_bilde_2.assets.url "alt" $bilderad_2_bilde_2.assets.context.alt "holder" "LQTIP" "title" $bilderad_2_bilde_2.assets.context.caption "source" "ext" "small" "true")}}
         </div>
-        <div class="bilderekke--wrap" style="background-image: url('{{ $bilderad_2_bilde_3 }}')">
+        <div class="bilderekke--wrap">
+        {{ partial "imgh" (dict "ctx" $bilderad_2_bilde_3 "src" $bilderad_2_bilde_3.assets.url "alt" $bilderad_2_bilde_3.assets.context.alt "holder" "LQTIP" "title" $bilderad_2_bilde_3.assets.context.caption "source" "ext" "small" "true")}}
         </div>
     </div>
-    {{ end }}
 {{ end }}
 

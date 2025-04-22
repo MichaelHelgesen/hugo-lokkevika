@@ -13,7 +13,7 @@
 {{ $hero_bilde := $comp_data.Topp.Bakgrunnsbilde.data.attributes.formats.medium.url}}
 {{ $ingres := $comp_data.Topp.Beskrivelse }}
 {{ $leverandorer := $comp_data.Leverandor }}
-{{ partial "top.html" (dict "title" $title "img" $hero_bilde "ingres" $ingres) }}
+{{ partial "top.html" (dict "title" $title "img" $comp_data.Topp.Bakgrunnsbilde.data.attributes "ingres" $ingres) }}
     {{ range $leverandorer }}
     <div class="leverandor">
         <div class="leverandor--wrapper">

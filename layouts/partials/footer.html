@@ -8,8 +8,10 @@
 {{ $img_url := "" }}
 {{ $comp_data := $components.data.attributes }}
 {{ range $comp_data.Bilde.data }}
-{{ $img_url = .attributes.formats.medium.url}}
+{{ $img_url = .attributes.formats.url}}
 {{ end }}
+{{$test := index $comp_data.Bilde.data 0}}
+
 <footer>
     <div class="menu">
         <div class="email"><a href="mailto:{{ $kontakt.data.attributes.Epost }}">Send oss en mail</a></div>
@@ -19,10 +21,12 @@
         </div>
     </div>
     <div class="address">
-        <div class="img" style="background-image: url('{{ $img_url }}')"></div>
+        <div class="img">
+        {{ partial "imgh" (dict "ctx" $test.attributes "src" $test.attributes.url "alt" "test" "holder" "LQTIP" "title" "test" "source" "ext" "small" "true")}}
+        </div>
         <div>
             <div class="logo">
-                <img src="{{ (resources.Get "/logo/lokkevika-handel-logo-white.svg").RelPermalink }}" />
+                <img src="{{ (resources.Get "/logo/lokkevika-handel-logo-white.svg").RelPermalink }}" loading="lazy" />
             </div>
             <p style="z-index:2;">
                 <b>Vår lokasjon:</b><br/>
@@ -33,10 +37,11 @@
 
             <a style="z-index:2;" class="button inverted" href="/apningstider">Åpningstider</a>
             <a style="z-index:2;" class="button inverted" href="/kontakt">Kontakt oss</a>
-            <div  class="absolute" style="background: url('{{ (resources.Get "/bilder/blomsterkvast.png").RelPermalink }}')"></div>
+            <div  class="absolute" style="background: url('{{ (resources.Get "/bilder/blomsterkvast.webp").RelPermalink }}')">
+            </div>
         </div>
     </div>
     <div class="copyright">
-        Copyright 2024  |  Løkkevika Handel
+        Copyright {{ now.Year }}  |  Løkkevika Handel
     </div>
 </footer>

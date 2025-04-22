@@ -1,0 +1,42 @@
+
+.top {
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.top figure {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right:0;
+}
+.top figure > div {
+    height: 100%;
+}
+
+.top figure img {
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+}
+
+.top--wrapper {
+    background-color: hsl(350, 18%, 54%, .90);
+    padding: var(--section-padding) var(--padding-desktop); 
+    position: relative;
+}
+
+.top--wrapper_content {
+    color: var(--base-color);
+    margin: 0 auto;
+    max-width: 750px;
+}
+
+.top--wrapper_content {
+    font-size: var(--font-size-big);
+}
+
+.top--wrapper_content p {
+    margin-bottom: 0;
+}

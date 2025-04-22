@@ -14,21 +14,21 @@
 {{ $ingres := $comp_data.Topp.Beskrivelse }}
 
 
-{{ partial "top.html" (dict "meny" $meny_liste "title" $title "img" $hero_bilde "ingres" $ingres) }}
+{{ partial "top.html" (dict "meny" $meny_liste "title" $title "img" $comp_data.Topp.Bakgrunnsbilde.data.attributes "ingres" $ingres) }}
 <div class="meny--page" >
-    <div class="absolute" style="background:url('{{ (resources.Get "/bilder/blomst-repeat.jpeg").RelPermalink }}')"></div>
+    <div class="absolute" style="background:url('{{ (resources.Get "/bilder/blomst-repeat.webp").RelPermalink }}')"></div>
     {{ range $meny_liste.data }}
         <div class="meny--wrapper">
             <div class="tittel">
                 <div class="ikon" id="{{ .id }}">
                     <img src="{{ .attributes.Ikon.data.attributes.url }}" /> 
                 </div>
-                <h3>{{ .attributes.Tittel }}</h3>
+                <h2>{{ .attributes.Tittel }}</h2>
             </div>
             {{ range .attributes.Varer }}
                 <div class="meny--wrapper_enhet">
                     <div class="meny--wrapper_enhet--beskrivelse">
-                        <h4>{{ .Tittel }}</h4>
+                        <h3>{{ .Tittel }}</h3>
                         <p>{{ .Beskrivelse | markdownify }}</p>
                     </div>
                     {{ if .Pris }}

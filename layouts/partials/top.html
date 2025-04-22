@@ -1,5 +1,6 @@
 {{ $data := .}}
-<div class="top" style="background-image: url('{{.img}}')">
+<div class="top">
+        {{ partial "imgh" (dict "ctx" $data.img "src" $data.img.url "holder" "LQTIP" "source" "ext" "small" "true" "lazy" "false" "fade" "false")}}
     <div class="top--wrapper">
         <div class="top--wrapper_content">
             <h1>{{.title}}</h1>

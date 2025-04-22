@@ -2,7 +2,7 @@
 {{ with .alternativeText }}
     {{ . }}
 {{ end }}
-{{- $myCloud := "dckscueuu" -}}
+{{- $myCloud := (getenv "HUGO_cloudinary_name") -}}
 {{- $cloudiBase := print "https://res.cloudinary.com/" $myCloud "/image/upload/" -}}
 {{- $xFmPart1 := "f_auto,q_auto,w_" -}}
 {{- $xFmPart2 := ",x_0,z_1/" -}}

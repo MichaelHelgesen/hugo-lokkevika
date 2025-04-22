@@ -1,11 +1,12 @@
 {{ define "main" }}
+{{ $strapi_url := (getenv "HUGO_strapi_url")}}
 
-{{ $strapi_single_types := print "https://strapi-production-4b65.up.railway.app/api/side-leverandorer?populate[0]=Topp.Bakgrunnsbilde"
+{{ $strapi_single_types := print $strapi_url "side-leverandorer?populate[0]=Topp.Bakgrunnsbilde"
     "&"
     "populate[1]=Leverandor.Bilde"
 }}
 {{ $opts := dict
-    "headers" (dict "Authorization" "Bearer 35428451d9c783d7c30b79700cb687aeac3bcd3988a5af0ff13db2c888c5664026e9ed47ce2484789ec41d61f478ea72428c96d36d00145f5dbabe54053bf97f31b0f385d72be2af38a55b36ec8c17a79d8a3b96941344c36e7f5e0e8645ad1bfbdbf63243ec6f9d2e4410bce3c2576fecbbdf37a5a05f334a48c46bfd33ce02")
+    "headers" (dict "Authorization" (getenv "HUGO_strapi_bearer"))
 }}
 {{ $components := resources.GetRemote $strapi_single_types $opts | unmarshal }}
 {{ $comp_data := $components.data.attributes }}

@@ -94,7 +94,7 @@
         </div>
         <div class="innehaverne--content">
             <h2>{{ $innehaverne.Tittel }}</h2>
-            <p>{{ $innehaverne.Tekst }}</p>
+            {{ $innehaverne.Tekst | markdownify }}
             <a class="button" href="/om-oss">Vår filosofi</a>
         </div>
     </div>
@@ -177,7 +177,7 @@
             </div>
             <div class="content">
                 <h2>{{ $moteplass.Tittel}}</h2>
-                <p>{{ $moteplass.Tekst }}</p>
+                <p>{{ $moteplass.Tekst | markdownify}}</p>
 </div>
             <div class="bilde5">
         {{ partial "imgh" (dict "ctx" $moteplass_bilde5 "src" $moteplass_bilde5.resources.url "alt" $moteplass_bilde5.resources.context.alt "holder" "LQTIP" "title" $moteplass_bilde5.resources.context.caption "source" "ext")}}

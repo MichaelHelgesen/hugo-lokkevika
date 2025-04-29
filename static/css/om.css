@@ -223,13 +223,18 @@ margin: 0 auto;
     margin: 0 auto;
     max-width: calc(var(--max-width) - (var(--padding-desktop)*2));
     padding: var(--section-padding) 0;
-}
-
-.tospalte p { 
     column-count: 1;
     column-gap: 0;
-    white-space: pre-wrap;
 }
+
+.tospalte p:first-of-type {
+    margin-top: 0;
+}
+
+.tospalte p:last-of-child {
+    margin-bottom: 0;
+}
+
 @media only screen and (min-width: 768px) {
     .toppbilde h2 {
         border-radius: 0 16px 0 0;
@@ -237,7 +242,7 @@ margin: 0 auto;
         width: 50%;
     }
 
-    .tospalte p { 
+    .tospalte { 
         column-count: 2;
         column-gap: 64px;
     }

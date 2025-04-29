@@ -380,7 +380,7 @@ header nav ul li:last-child a {
     }
 }
 
-@media only screen and (min-width:750px) {
+@media only screen and (min-width:780px) {
     header {
         gap: 32px;
         justify-content: center;
@@ -411,6 +411,7 @@ header nav ul li:last-child a {
 
     header nav a {
         border-bottom: none;
+        transition: color .2s ease;
     }
 
     header nav ul li:last-child {
@@ -423,6 +424,7 @@ header nav ul li:last-child a {
         color: var(--base-color);
         padding: 4px 16px;
         text-decoration: none;
+        transition: background .2s ease;
     }
 
     header nav ul li:last-child a:hover {
@@ -440,7 +442,7 @@ header nav ul li:last-child a {
     }
 }
 
-@media only screen and (min-width: 900px) {
+@media only screen and (min-width: 910px) {
     header {
         justify-content: space-between;
     }
@@ -490,6 +492,7 @@ html {
 .logo img {
     aspect-ratio: 127/56;
     height: 56px;
+    max-width: 100px;
 }
 
 main {

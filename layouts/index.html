@@ -133,7 +133,7 @@
                     <div class="salgspunkter--liste_enhet">
                         {{ $url := .Ikon.data.attributes.url}}
                         <div class="ikon">
-                            <img loading=”lazy” src="{{$url}}">
+                            <img loading=”lazy” src="{{$url}}" alt="Ikon som illustrerer {{.Tittel}}">
                         </div>
                         <h3>{{.Tittel}}</h3>
                         <p>{{ .Beskrivelse }}</p>

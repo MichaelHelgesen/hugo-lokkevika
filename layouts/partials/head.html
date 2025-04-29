@@ -1,18 +1,67 @@
 {{- $stylesheet := "" -}}
+{{ $strapi_url := (getenv "HUGO_strapi_url")}}
+{{ $opts := dict
+    "headers" (dict "Authorization" (getenv "HUGO_strapi_bearer"))
+}}
+{{ $components := "" }}
  {{ if .IsHome }}
-    {{$stylesheet = print "index.css"}}
+        {{ $strapi_single_types := print 
+            $strapi_url "side-hjem?populate[15]=metadata.Metabilde" 
+        }}
+        {{ $components = resources.GetRemote $strapi_single_types $opts | unmarshal }}
+        {{$stylesheet = print "index.css"}}
     {{ else if eq .Page.Type "meny"}}
-    {{ $stylesheet = print "meny.css"}}
+        {{ $strapi_single_types := print 
+            $strapi_url "side-meny?populate[15]=metadata.Metabilde" 
+        }}
+        {{ $components = resources.GetRemote $strapi_single_types $opts | unmarshal }}
+        {{ $stylesheet = print "meny.css"}}
     {{ else if eq .Page.Type "om"}}
-    {{ $stylesheet = print "om.css"}}
+        {{ $strapi_single_types := print 
+            $strapi_url "side-om?populate[15]=metadata.Metabilde" 
+        }}
+        {{ $components = resources.GetRemote $strapi_single_types $opts | unmarshal }}
+        {{ $stylesheet = print "om.css"}}
     {{ else if eq .Page.Type "leverandorer"}}
-    {{ $stylesheet = print "leverandorer.css" }}
+        {{ $strapi_single_types := print 
+            $strapi_url "side-leverandorer?populate[15]=metadata.Metabilde" 
+        }}
+        {{ $components = resources.GetRemote $strapi_single_types $opts | unmarshal }}
+        {{ $stylesheet = print "leverandorer.css" }}
     {{ else if eq .Page.Type "kontakt"}}
-    {{ $stylesheet = print "kontakt.css" }}
+        {{ $strapi_single_types := print 
+            $strapi_url "side-kontakt?populate[15]=metadata.Metabilde" 
+        }}
+        {{ $components = resources.GetRemote $strapi_single_types $opts | unmarshal }}
+        {{ $stylesheet = print "kontakt.css" }}
     {{ else if eq .Page.Type "apningstider"}}
-    {{ $stylesheet = print "apningstider.css" }}
+        {{ $strapi_single_types := print 
+            $strapi_url "side-apningstider?populate[15]=metadata.Metabilde" 
+        }}
+        {{ $components = resources.GetRemote $strapi_single_types $opts | unmarshal }}
+        {{ $stylesheet = print "apningstider.css" }}
  {{ end }}
+
+
 <head>
+    {{ if or .IsPage .IsHome}}
+    {{- with $components.data.attributes.metadata -}}
+        
+{{ $metaimage := ""}}
+        {{with .Metabilde.data}}
+            {{ range .}}
+            {{ $metaimage = .attributes.formats.small.url}}
+        {{end }}
+    {{ end }} 
+    <meta name="description" content="{{ $components.data.attributes.metadata.Metabeskrivelse }}">
+    <meta name="title" content="{{ $components.data.attributes.metadata.Metatittel }}">
+    <meta property="og:title" content="{{$components.data.attributes.metadata.Metatittel}}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="{{ $metaimage }}" /> 
+    <meta property="og:url" content="https://www.lokkevikahandel.no" />
+    <meta property="og:description" content="{{$components.data.attributes.metadata.Metabeskrivelse}}" />
+    {{ end }}
+    {{- end }}
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="preload" href="{{ relURL "css/style.css" }}" media="screen" type="text/css" as="style">
     <link rel="stylesheet" href="{{ relURL "css/style.css" }}" media="screen" type="text/css">

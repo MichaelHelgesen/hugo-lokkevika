@@ -1,13 +1,11 @@
 ( function() {
 	const siteNavigation = document.getElementsByTagName( 'header' )[0];
-    console.log(siteNavigation);
 	// Return early if the navigation don't exist.
 	if ( ! siteNavigation ) {
 		return;
 	}
 
 	const button = siteNavigation.querySelector( '.mobile-nav' );
-    console.log(button);
 	// Return early if the button don't exist.
 	if ( 'undefined' === typeof button ) {
 		return;
@@ -16,7 +14,6 @@
     const menuIcon = document.getElementById("menu-toggle");
 
 	const menu = siteNavigation.getElementsByTagName( 'ul' )[ 0 ];
-    console.log(menu);
 	// Hide menu toggle button if menu is empty and return early.
 	if ( 'undefined' === typeof menu ) {
 		button.style.display = 'none';
@@ -52,7 +49,6 @@
 
 	// Get all the link elements within the menu.
 	const links = menu.getElementsByTagName( 'a' );
-    console.log(links);
 	// Get all the link elements with children within the menu.
 	const linksWithChildren = menu.querySelectorAll( '.menu-item-has-children > a, .page_item_has_children > a' );
 

@@ -260,6 +260,7 @@ header .mobile-nav a {
     gap: 16px;
     align-items: center;
     cursor: pointer;
+    color: var(--primary-color);
 }
 
 header.toggled nav {

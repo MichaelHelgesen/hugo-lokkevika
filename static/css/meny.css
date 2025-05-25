@@ -116,6 +116,10 @@
     text-align: center;
 }
 
+.meny--wrapper .beskrivelse {
+    font-size: 18px;
+}
+
 .meny--wrapper_enhet {
     background: var(--base-color);
     display: flex;
@@ -133,6 +137,12 @@
 
 .meny--wrapper_enhet--beskrivelse p {
     margin: 0;
+}
+
+.meny--wrapper_enhet--beskrivelse h3 {
+    font-size: 18px;
+    line-height: 1.4em;
+    line-break: anywhere;
 }
 
 .meny--wrapper > div:last-child {

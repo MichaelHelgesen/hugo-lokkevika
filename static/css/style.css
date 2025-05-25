@@ -261,6 +261,11 @@ header .mobile-nav a {
     align-items: center;
     cursor: pointer;
     color: var(--primary-color);
+    text-decoration: none;
+}
+
+header .mobile-nav:hover a {
+    text-decoration: underline;
 }
 
 header.toggled nav {

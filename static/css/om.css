@@ -185,7 +185,7 @@ margin: 0 auto;
     border-radius: 16px;
     display: flex;
     flex-direction: column;
-    height: 100vw;
+    height: 80vw;
     justify-content: flex-end;
     margin: 0 auto;
     max-width: calc(var(--max-width) - (var(--padding-desktop)*2));

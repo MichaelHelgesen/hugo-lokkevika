@@ -142,7 +142,7 @@
 .meny--wrapper_enhet--beskrivelse h3 {
     font-size: 18px;
     line-height: 1.4em;
-    line-break: anywhere;
+    overflow-wrap: anywhere;
 }
 
 .meny--wrapper > div:last-child {

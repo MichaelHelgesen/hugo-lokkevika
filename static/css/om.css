@@ -57,9 +57,6 @@ margin: 0 auto;
     overflow: hidden;
      
 }
-.fremhevet--bilde img {
-
-}
 
 .fremhevet--tekst {
     color: var(--base-color);
@@ -197,7 +194,7 @@ margin: 0 auto;
     flex-direction: column;
     height: 80vw;
     justify-content: flex-end;
-    margin: 0 auto;
+    margin: var(--section-padding) auto 0 auto;
     max-width: calc(var(--max-width) - (var(--padding-desktop)*2));
     max-height: 800px;
     overflow: hidden;
@@ -248,7 +245,6 @@ margin: 0 auto;
     .toppbilde h2 {
         border-radius: 0 16px 0 0;
         padding: 56px;
-        width: 50%;
     }
 
     .tospalte { 

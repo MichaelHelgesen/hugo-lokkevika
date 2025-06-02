@@ -30,6 +30,13 @@ margin: 0 auto;
     padding: var(--section-padding) 0;
 }
 
+.toppbilde {
+    margin-top: var(--section-padding);
+}
+
+.toppbilde img {
+    border-radius: 16px;
+}
 
 @media only screen and (min-width: 768px) {
     .enspalte > div {
@@ -177,12 +184,15 @@ margin: 0 auto;
     padding: 24px;
 }
 
+.toppbilde h2 {
+    padding-top: 20px;
+}
+
 @media only screen and (min-width: 500px) {
 .tekst-i-bilde > div {
     margin: 400px 24px 0 24px;
 }
 .toppbilde {
-    border-radius: 16px;
     display: flex;
     flex-direction: column;
     height: 80vw;
@@ -190,7 +200,6 @@ margin: 0 auto;
     margin: 0 auto;
     max-width: calc(var(--max-width) - (var(--padding-desktop)*2));
     max-height: 800px;
-    margin-top: var(--section-padding);
     overflow: hidden;
     position: relative;
 }

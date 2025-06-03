@@ -6,6 +6,8 @@
     "populate[1]=Tekst"
     "&"
     "populate[2]=Tekst.Fil"
+    "&"
+    "populate[3]=Tekst.Bilde"
 }}
 {{ $strapi_types_kontakt := print $strapi_url "side-lokkevika-hage?populate=*"}}
 {{ $opts := dict
@@ -17,13 +19,17 @@
 {{ $title := $comp_data.Topp.Tittel}}
 {{ $hero_bilde := $comp_data.Topp.Bakgrunnsbilde.data.attributes.formats.medium.url}}
 {{ $fil := $comp_data.Tekst.Fil.data.attributes.url}}
+{{ $bilde := $comp_data.Tekst.Bilde.data.attributes}}
 {{ $ingres := $comp_data.Topp.Beskrivelse }}
 {{ $tekst := $comp_data.Tekst }}
 {{ partial "top.html" (dict "title" $title "img" $comp_data.Topp.Bakgrunnsbilde.data.attributes "ingres" $ingres) }}
     <div class="kontakt">
         <div class="kontakt--wrapper">
-            <div class="kontakt--tekst">
+            <div class="kontakt--tekst--bilde">
                 <h2>{{ $tekst.Tittel }}</h2>
+                <div class="bilde">
+        {{ partial "imgh" (dict "ctx" $bilde "src" $bilde.resources.url "alt" $bilde.assets.context.alt "holder" "LQTIP" "title" $bilde.assets.context.caption "source" "ext" "lazy" "false" "fade" "false" "big" "true")}}
+                </div>
                 {{$tekst.beskrivelse | markdownify}}
                 <br />
                 <a href="{{ $fil }}">Last ned beskrivelse</a>

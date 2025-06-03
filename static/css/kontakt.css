@@ -10,6 +10,17 @@
     position: relative;
 }
 
+.kontakt--tekst--bilde {
+    text-align: left;
+}
+
+.kontakt--tekst--bilde h2 {
+    margin-bottom: 32px;
+}
+
+.kontakt a {
+    color: var(--primary-color);
+}
 
 .kontakt h3 {
     margin-top: 32px;

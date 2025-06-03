@@ -61,7 +61,7 @@
 {{ partial "top.html" (dict "meny" $meny_liste "title" $title "img" $comp_data.Topp.Bakgrunnsbilde.data.attributes "ingres" $ingres) }}
 <div class="om--wrapper">
     <div class="toppbilde">
-        {{ partial "imgh" (dict "ctx" $toppbilde "src" $toppbilde.resources.url "alt" $toppbilde.assets.context.alt "holder" "LQTIP" "title" $toppbilde.assets.context.caption "source" "ext" "lazy" "false" "fade" "false" "big" "true")}}
+        {{ partial "imgh" (dict "ctx" $toppbilde "src" $toppbilde.resources.url "alt" $toppbilde.assets.context.alt "holder" "LQTIP" "title" $toppbilde.assets.context.caption "source" "ext" "lazy" "false" "fade" "false")}}
         <h2 class="sans">{{ $topptittel}}</h2>
     </div>
     <div class="tospalte">

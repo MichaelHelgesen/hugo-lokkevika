@@ -1,0 +1,33 @@
+{{ define "main" }}
+{{ $strapi_url := (getenv "HUGO_strapi_url")}}
+
+{{ $strapi_single_types := print $strapi_url "side-lokkevika-hage?populate[0]=Topp.Bakgrunnsbilde"
+    "&"
+    "populate[1]=Tekst"
+    "&"
+    "populate[2]=Tekst.Fil"
+}}
+{{ $strapi_types_kontakt := print $strapi_url "side-lokkevika-hage?populate=*"}}
+{{ $opts := dict
+    "headers" (dict "Authorization" (getenv "HUGO_strapi_bearer"))
+}}
+{{ $kontakt := resources.GetRemote $strapi_types_kontakt $opts | unmarshal }}
+{{ $components := resources.GetRemote $strapi_single_types $opts | unmarshal }}
+{{ $comp_data := $components.data.attributes }}
+{{ $title := $comp_data.Topp.Tittel}}
+{{ $hero_bilde := $comp_data.Topp.Bakgrunnsbilde.data.attributes.formats.medium.url}}
+{{ $fil := $comp_data.Tekst.Fil.data.attributes.url}}
+{{ $ingres := $comp_data.Topp.Beskrivelse }}
+{{ $tekst := $comp_data.Tekst }}
+{{ partial "top.html" (dict "title" $title "img" $comp_data.Topp.Bakgrunnsbilde.data.attributes "ingres" $ingres) }}
+    <div class="kontakt">
+        <div class="kontakt--wrapper">
+            <div class="kontakt--tekst">
+                <h2>{{ $tekst.Tittel }}</h2>
+                {{$tekst.beskrivelse | markdownify}}
+                <br />
+                <a href="{{ $fil }}">Last ned beskrivelse</a>
+            </div>
+    </div>{{ end }}
+
+

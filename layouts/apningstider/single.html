@@ -19,7 +19,7 @@
 {{ $tekst := $comp_data.Tekst_enspalte }}
 {{ partial "top.html" (dict "title" $title "img" $comp_data.Topp.Bakgrunnsbilde.data.attributes "ingres" $ingres) }}
     <div class="apningstider">
-    <div class="absolute" style="background:url('{{ (resources.Get "/bilder/blomst-repeat.jpeg").RelPermalink }}')"></div>
+    <div class="absolute"></div>
         <div class="apningstider--wrapper">
             <div class="apningstider--tekst">
                 <h2>{{ $tekst.Tittel }}</h2>

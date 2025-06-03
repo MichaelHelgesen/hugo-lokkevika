@@ -34,6 +34,12 @@
         }}
         {{ $components = resources.GetRemote $strapi_single_types $opts | unmarshal }}
         {{ $stylesheet = print "kontakt.css" }}
+    {{ else if eq .Page.Type "lokkevika-hage"}}
+        {{ $strapi_single_types := print 
+            $strapi_url "side-lokkevika-hage?populate[15]=metadata.Metabilde" 
+        }}
+        {{ $components = resources.GetRemote $strapi_single_types $opts | unmarshal }}
+        {{ $stylesheet = print "kontakt.css" }}
     {{ else if eq .Page.Type "apningstider"}}
         {{ $strapi_single_types := print 
             $strapi_url "side-apningstider?populate[15]=metadata.Metabilde" 
@@ -42,7 +48,6 @@
         {{ $stylesheet = print "apningstider.css" }}
  {{ end }}
 
-
 <head>
     {{ if or .IsPage .IsHome}}
     {{- with $components.data.attributes.metadata -}}
@@ -50,7 +55,7 @@
 {{ $metaimage := ""}}
         {{with .Metabilde.data}}
             {{ range .}}
-            {{ $metaimage = .attributes.formats.small.url}}
+            {{ $metaimage = or .attributes.formats.small.url .formats.small.url }}
         {{end }}
     {{ end }} 
     <meta name="description" content="{{ $components.data.attributes.metadata.Metabeskrivelse }}">

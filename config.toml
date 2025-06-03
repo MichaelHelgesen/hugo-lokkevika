@@ -10,10 +10,6 @@ timeout = "10m"
 
 [menus]
   [[menus.main]]
-    name = 'Hjem'
-    pageRef = '/'
-    weight = 10
-  [[menus.main]]
     name = 'Meny'
     pageRef = '/meny'
     weight = 20
@@ -30,9 +26,13 @@ timeout = "10m"
     pageRef = '/kontakt'
     weight = 50
   [[menus.main]]
+    name = 'Løkkevika Hage'
+    pageRef = '/lokkevika-hage'
+    weight = 60
+  [[menus.main]]
     name = 'Åpningstider'
     pageRef = '/apningstider'
-    weight = 60
+    weight = 70
 
 [markup]
   [markup.goldmark]

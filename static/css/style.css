@@ -351,11 +351,12 @@ header nav ul li {
 header nav a {
     border-bottom: 1px solid var(--base-color-2);
     color: var(--primary-color);
-    padding: 12px;
+    padding: 12px 10px;
     font-family: "Libre Baskerville";
     font-style: normal;
     text-decoration: none;
     display: block;
+    font-size: 14px;
 }
 
 header nav ul li:last-child a {

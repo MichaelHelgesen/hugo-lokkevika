@@ -2,14 +2,16 @@
 
 .bilderekke {
     display: flex;
-    gap: 32px;
+    flex-direction: column;
+    gap: 24px;
 }
 
 .bilderekke--wrap {
-    display: relative;
+    position: relative;
     overflow: hidden;
-    width: 33.33%;
+    width: 100%;
 }
+
 .bilderekke--wrap figure {
     position: absoulte;
     top:0;
@@ -20,10 +22,7 @@
 .bilderekke--wrap figure > div {
     height: 100%;
 }
-.bilderekke--wrap img {
-    object-fit: cover;
-    aspect-ratio: 3/4;
-}
+
 .enspalte {
 margin: 0 auto;
     max-width: calc(var(--max-width) - (var(--padding-desktop)* 2));
@@ -186,6 +185,19 @@ margin: 0 auto;
 }
 
 @media only screen and (min-width: 500px) {
+.bilderekke {
+    flex-direction: row;
+}
+
+.bilderekke--wrap {
+    width: 33.33%;
+}
+
+.bilderekke--wrap img {
+    object-fit: cover;
+    aspect-ratio: 3/4;
+}
+
 .tekst-i-bilde > div {
     margin: 400px 24px 0 24px;
 }

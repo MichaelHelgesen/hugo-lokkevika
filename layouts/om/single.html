@@ -61,7 +61,7 @@
 {{ partial "top.html" (dict "meny" $meny_liste "title" $title "img" $comp_data.Topp.Bakgrunnsbilde.data.attributes "ingres" $ingres) }}
 <div class="om--wrapper">
     <div class="toppbilde">
-        {{ partial "imgh" (dict "ctx" $toppbilde "src" $toppbilde.resources.url "alt" $toppbilde.assets.context.alt "holder" "LQTIP" "title" $toppbilde.assets.context.caption "source" "ext" "lazy" "false" "fade" "false")}}
+        {{ partial "imgh" (dict "ctx" $toppbilde "src" $toppbilde.resources.url "alt" $toppbilde.assets.context.alt "holder" "LQTIP" "title" $toppbilde.assets.context.caption "source" "ext" "lazy" "false" "fade" "false" "big" "true")}}
         <h2 class="sans">{{ $topptittel}}</h2>
     </div>
     <div class="tospalte">
@@ -115,8 +115,8 @@
             <p>{{ $tekst_med_sitat2.Sitat }}</p>
         </div>
     </div>
-    <div class="tekst-i-bilde" style="background-image:url({{ $tekst_pa_bilde_bilde }})">
-        {{ partial "imgh" (dict "ctx" $tekst_pa_bilde_bilde "src" $tekst_pa_bilde_bilde.assets.url "alt" $tekst_pa_bilde_bilde.assets.context.alt "holder" "LQTIP" "title" $tekst_pa_bilde_bilde.assets.context.caption "source" "ext")}}
+    <div class="tekst-i-bilde">
+        {{ partial "imgh" (dict "ctx" $tekst_pa_bilde_bilde "src" $tekst_pa_bilde_bilde.assets.url "alt" $tekst_pa_bilde_bilde.assets.context.alt "holder" "LQTIP" "title" $tekst_pa_bilde_bilde.assets.context.caption "source" "ext" "big" "true")}}
         <div>{{ $tekst_pa_bilde.Tekst | markdownify }}</div> 
     </div>
     <div class="enspalte">

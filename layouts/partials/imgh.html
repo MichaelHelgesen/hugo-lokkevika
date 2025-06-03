@@ -2,6 +2,9 @@
 {{ if eq .small "true"}}
 {{ $respSizes = slice "320" "640" "960" "1280" "1600" "1920" -}}
 {{- end -}}
+{{ if eq .big "true"}}
+{{ $respSizes = slice "1280" "1600" "1920" -}}
+{{- end -}}
 {{ $data := "" }}
 {{- $imgBd5 := "" -}}
 {{$width := ""}}

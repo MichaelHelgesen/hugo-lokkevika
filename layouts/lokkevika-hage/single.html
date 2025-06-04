@@ -26,7 +26,9 @@
     <div class="hage">
         <div class="hage--wrapper">
             <div class="hage--tekst--bilde">
-                <h2>{{ $tekst.Tittel }}</h2>
+                {{ with $tekst.Tittel }}
+                    <h2>{{ $tekst.Tittel }}</h2>
+                {{ end }}
                 <div class="bilde">
         {{ partial "imgh" (dict "ctx" $bilde "src" $bilde.resources.url "alt" $bilde.assets.context.alt "holder" "LQTIP" "title" $bilde.assets.context.caption "source" "ext" "lazy" "false" "fade" "false" "big" "true")}}
                 </div>

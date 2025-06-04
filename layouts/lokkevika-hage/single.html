@@ -23,16 +23,19 @@
 {{ $ingres := $comp_data.Topp.Beskrivelse }}
 {{ $tekst := $comp_data.Tekst }}
 {{ partial "top.html" (dict "title" $title "img" $comp_data.Topp.Bakgrunnsbilde.data.attributes "ingres" $ingres) }}
-    <div class="kontakt">
-        <div class="kontakt--wrapper">
-            <div class="kontakt--tekst--bilde">
+    <div class="hage">
+        <div class="hage--wrapper">
+            <div class="hage--tekst--bilde">
                 <h2>{{ $tekst.Tittel }}</h2>
                 <div class="bilde">
         {{ partial "imgh" (dict "ctx" $bilde "src" $bilde.resources.url "alt" $bilde.assets.context.alt "holder" "LQTIP" "title" $bilde.assets.context.caption "source" "ext" "lazy" "false" "fade" "false" "big" "true")}}
                 </div>
                 {{$tekst.beskrivelse | markdownify}}
                 <br />
-                <a href="{{ $fil }}">Last ned beskrivelse</a>
+            <div class="knapper">
+                <a class="button" href="{{ $fil }}">Last ned beskrivelse</a>
+                <a class="button" href="/kontakt">Ta kontakt</a>
+            </div>
             </div>
     </div>{{ end }}
 

@@ -39,7 +39,7 @@
             $strapi_url "side-lokkevika-hage?populate[15]=metadata.Metabilde" 
         }}
         {{ $components = resources.GetRemote $strapi_single_types $opts | unmarshal }}
-        {{ $stylesheet = print "kontakt.css" }}
+        {{ $stylesheet = print "lokkevika-hage.css" }}
     {{ else if eq .Page.Type "apningstider"}}
         {{ $strapi_single_types := print 
             $strapi_url "side-apningstider?populate[15]=metadata.Metabilde" 

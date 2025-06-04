@@ -1,0 +1,15 @@
+@import url("topp.css");
+
+.hage--wrapper {
+    padding: var(--section-padding) var(--padding-desktop) var(--section-padding)  var(--padding-desktop);
+}
+
+.hage h2 {
+    margin-bottom: 32px;
+}
+
+.hage .knapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}

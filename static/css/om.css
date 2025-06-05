@@ -58,6 +58,7 @@ margin: 0 auto;
 }
 
 .fremhevet--tekst {
+    align-self: center;
     color: var(--base-color);
     padding: var(--section-padding) 0 0 0;
 }
@@ -76,6 +77,7 @@ margin: 0 auto;
     .fremhevet--wrapper {
         flex-direction: row;
         gap: 64px;
+        min-height: 30vw;
     }
 
     .fremhevet--bilde {

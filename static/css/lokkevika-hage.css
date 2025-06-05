@@ -2,14 +2,29 @@
 
 .hage--wrapper {
     padding: var(--section-padding) var(--padding-desktop) var(--section-padding)  var(--padding-desktop);
+    max-width: var(--max-width);
+    margin: 0 auto;
 }
 
 .hage h2 {
     margin-bottom: 32px;
 }
 
+.hage .enspalte {
+}
+
+@media only screen and (min-width: 768px) {
+    .hage .enspalte > div {
+        width: 65%;
+        margin: 0 auto;
+    }
+}
+
+
 .hage .knapper {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
+    justify-content: center;
+    margin-top: 32px;
 }

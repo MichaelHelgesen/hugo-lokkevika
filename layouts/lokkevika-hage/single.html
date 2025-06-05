@@ -32,8 +32,12 @@
                 <div class="bilde">
         {{ partial "imgh" (dict "ctx" $bilde "src" $bilde.resources.url "alt" $bilde.assets.context.alt "holder" "LQTIP" "title" $bilde.assets.context.caption "source" "ext" "lazy" "false" "fade" "false" "big" "true")}}
                 </div>
+                <div class="enspalte">
+                    <div>
                 {{$tekst.beskrivelse | markdownify}}
-                <br />
+                    </div>
+                </div>
+
             <div class="knapper">
                 <a class="button" href="{{ $fil }}">Last ned beskrivelse</a>
                 <a class="button" href="/kontakt">Ta kontakt</a>

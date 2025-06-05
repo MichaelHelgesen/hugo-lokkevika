@@ -89,7 +89,7 @@
     </div> --> 
     <section>    
     <div class="innehaverne">
-            {{ partial "imgh" (dict "ctx" . "src" "/bilder/innehaverne2.png" "alt" $hero_bilde2.resources.context.alt "holder" "LQTIP" "title" $hero_bilde2.resources.context.caption "small" "true")}}
+            {{ partial "imgh" (dict "ctx" . "src" "/bilder/innehaverne3.png" "alt" $hero_bilde2.resources.context.alt "holder" "LQTIP" "title" $hero_bilde2.resources.context.caption "small" "true")}}
         <div class="innehaverne--image">
         </div>
         <div class="innehaverne--content">
@@ -127,24 +127,27 @@
         </div>
     </section>
     <section class="salgspunkter">
-        <h2>{{ $salgspunkter.Tittel }}</h2>
-        <div class="salgspunkter--liste">
-                {{range $tjenesteliste}}
-                    <div class="salgspunkter--liste_enhet">
-                        {{ $url := .Ikon.data.attributes.url}}
-                        <div class="ikon">
-                            <img loading=”lazy” src="{{$url}}" alt="Ikon som illustrerer {{.Tittel}}">
+        <div class="salgspunkter--wrap">
+            <h2>{{ $salgspunkter.Tittel }}</h2>
+            <div class="salgspunkter--liste">
+                    {{range $tjenesteliste}}
+                        <div class="salgspunkter--liste_enhet">
+                            {{ $url := .Ikon.data.attributes.url}}
+                            <div class="ikon">
+                                <img loading=”lazy” src="{{$url}}" alt="Ikon som illustrerer {{.Tittel}}">
+                            </div>
+                            <h3>{{.Tittel}}</h3>
+                            <p>{{ .Beskrivelse }}</p>
                         </div>
-                        <h3>{{.Tittel}}</h3>
-                        <p>{{ .Beskrivelse }}</p>
-                    </div>
-                {{end}}
+                    {{end}}
+            </div>
         </div>
     </section>
     <div class="bilde_fullbredde">
         {{ partial "imgh" (dict "ctx" $bilde_fullbredde_2 "src" $bilde_fullbredde_2.resources.url "alt" $bilde_fullbredde_2.resources.context.alt "holder" "LQTIP" "title" $bilde_fullbredde_1.resources.context.caption "source" "ext" "small" "true")}}
     </div>
     <section class="referanser" style="background:url('{{ (resources.Get "/bilder/blomster-bg.webp").RelPermalink }}')">
+        <div class="referanser--wrap-outer">
         <div class="referanser--wrap">
             <h2>{{ $referanser.Tittel }}</h2>
             <div class="referanser--liste">
@@ -159,6 +162,7 @@
                     {{end}}
             </div>
             <a class="button" href="/meny">Se menyen</a>
+        </div>
         </div>
     </section>
     <section>

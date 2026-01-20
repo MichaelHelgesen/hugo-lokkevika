@@ -1,28 +1,33 @@
 {{ define "main" }}
 {{ $strapi_url := (getenv "HUGO_strapi_url")}}
-
-{{ $strapi_single_types := print $strapi_url "side-lokkevika-hage?populate[0]=Topp.Bakgrunnsbilde"
-    "&"
-    "populate[1]=Tekst"
-    "&"
-    "populate[2]=Tekst.Fil"
-    "&"
-    "populate[3]=Tekst.Bilde"
-}}
-{{ $strapi_types_kontakt := print $strapi_url "side-lokkevika-hage?populate=*"}}
+{{/* V5: Bruk populate=* */}}
+{{ $strapi_single_types := print $strapi_url 
+    "side-lokkevika-hage"
+    "?populate[Topp][populate]=Bakgrunnsbilde"
+    "&populate[Tekst][populate][0]=Fil"
+    "&populate[Tekst][populate][1]=Bilde"
+}}{{ $strapi_types_kontakt := print $strapi_url "side-lokkevika-hage?populate=*"}}
 {{ $opts := dict
     "headers" (dict "Authorization" (getenv "HUGO_strapi_bearer"))
 }}
 {{ $kontakt := resources.GetRemote $strapi_types_kontakt $opts | unmarshal }}
 {{ $components := resources.GetRemote $strapi_single_types $opts | unmarshal }}
-{{ $comp_data := $components.data.attributes }}
+
+{{/* V5: Fjern .attributes */}}
+{{ $comp_data := $components.data }}
 {{ $title := $comp_data.Topp.Tittel}}
-{{ $hero_bilde := $comp_data.Topp.Bakgrunnsbilde.data.attributes.formats.medium.url}}
-{{ $fil := $comp_data.Tekst.Fil.data.attributes.url}}
-{{ $bilde := $comp_data.Tekst.Bilde.data.attributes}}
+
+{{/* V5: Fjern .data.attributes fra media */}}
+{{ $hero_bilde := $comp_data.Topp.Bakgrunnsbilde.formats.medium.url}}
+{{ $fil := $comp_data.Tekst.Fil.url}}
+{{ $bilde := $comp_data.Tekst.Bilde}}
+
 {{ $ingres := $comp_data.Topp.Beskrivelse }}
 {{ $tekst := $comp_data.Tekst }}
-{{ partial "top.html" (dict "title" $title "img" $comp_data.Topp.Bakgrunnsbilde.data.attributes "ingres" $ingres) }}
+
+{{/* V5: Fjern .data.attributes fra partial */}}
+{{ partial "top.html" (dict "title" $title "img" $comp_data.Topp.Bakgrunnsbilde "ingres" $ingres) }}
+
     <div class="hage">
         <div class="hage--wrapper">
             <div class="hage--tekst--bilde">
@@ -30,19 +35,19 @@
                     <h2>{{ $tekst.Tittel }}</h2>
                 {{ end }}
                 <div class="bilde">
-        {{ partial "imgh" (dict "ctx" $bilde "src" $bilde.resources.url "alt" $bilde.assets.context.alt "holder" "LQTIP" "title" $bilde.assets.context.caption "source" "ext" "lazy" "false" "fade" "false" "big" "true")}}
+                    {{/* V5: Fjern .data.attributes - bilde er nå direkte objekt */}}
+                    {{ partial "imgh" (dict "ctx" $bilde "src" $bilde.url "alt" $bilde.alternativeText "holder" "LQTIP" "title" $bilde.caption "source" "ext" "lazy" "false" "fade" "false" "big" "true")}}
                 </div>
                 <div class="enspalte">
                     <div>
-                {{$tekst.beskrivelse | markdownify}}
+                        {{$tekst.beskrivelse | markdownify}}
                     </div>
                 </div>
-
-            <div class="knapper">
-                <a class="button" href="{{ $fil }}">Last ned beskrivelse</a>
-                <a class="button" href="/kontakt">Ta kontakt</a>
+                <div class="knapper">
+                    <a class="button" href="{{ $fil }}">Last ned beskrivelse</a>
+                    <a class="button" href="/kontakt">Ta kontakt</a>
+                </div>
             </div>
-            </div>
-    </div>{{ end }}
-
-
+        </div>
+    </div>
+{{ end }}

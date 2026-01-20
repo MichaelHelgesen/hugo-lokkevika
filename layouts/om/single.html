@@ -1,67 +1,66 @@
 {{ define "main" }}
 {{ $strapi_url := (getenv "HUGO_strapi_url")}}
 
-{{ $strapi_single_types := print $strapi_url "side-om?populate[0]=Topp.Bakgrunnsbilde"
-   "&"
-   "populate[1]=Bilde_topp.Bakgrunnsbilde"
-   "&"
-   "populate[2]=Tospalte"
-   "&"
-   "populate[3]=Bilderad1.Bilde1"
-   "&"
-   "populate[4]=Bilderad1.Bilde2"
-   "&"
-   "populate[5]=Bilderad1.Bilde3"
-   "&"
-   "populate[6]=Tekst_med_sitat"
-   "&"
-   "populate[7]=Fremhevet_tekst.Bilde"
-   "&"
-   "populate[8]=Tekst_med_sitat2.Bilde"
-   "&"
-   "populate[9]=Bilderad2.Bilde1"
-   "&"
-   "populate[10]=Bilderad2.Bilde2"
-   "&"
-   "populate[11]=Bilderad2.Bilde3"
-   "&"
-   "populate[12]=Tekst_enspalte"
-   "&"
-   "populate[13]=Tekst_pa_bilde.Bilde"
-}}
-{{ $strapi_collection_meny := print $strapi_url "menies?populate=*" }}
+{{/* V5: Bruk populate=* */}}
+{{ $strapi_single_types := print $strapi_url 
+    "side-om"
+    "?populate[Topp][populate]=Bakgrunnsbilde"
+    "&populate[Bilde_topp][populate]=Bakgrunnsbilde"
+    "&populate[Tospalte]=*"
+    "&populate[Bilderad1][populate][0]=Bilde1"
+    "&populate[Bilderad1][populate][1]=Bilde2"
+    "&populate[Bilderad1][populate][2]=Bilde3"
+    "&populate[Tekst_med_sitat][populate]=Bilde"
+    "&populate[Fremhevet_tekst][populate]=Bilde"
+    "&populate[Tekst_med_sitat2][populate]=Bilde"
+    "&populate[Bilderad2][populate][0]=Bilde1"
+    "&populate[Bilderad2][populate][1]=Bilde2"
+    "&populate[Bilderad2][populate][2]=Bilde3"
+    "&populate[Tekst_enspalte]=*"
+    "&populate[Tekst_pa_bilde][populate]=Bilde"
+}}{{ $strapi_collection_meny := print $strapi_url "menies?populate=*" }}
 {{ $opts := dict
     "headers" (dict "Authorization" (getenv "HUGO_strapi_bearer"))
 }}
 {{ $components := resources.GetRemote $strapi_single_types $opts | unmarshal }}
 {{ $meny_liste := resources.GetRemote $strapi_collection_meny $opts | unmarshal}}
 
-{{ $comp_data := $components.data.attributes }}
+{{/* V5: Fjern .attributes */}}
+{{ $comp_data := $components.data }}
 {{ $title := $comp_data.Topp.Tittel}}
-{{ $hero_bilde := $comp_data.Topp.Bakgrunnsbilde.data.attributes.formats.medium.url}}
+
+{{/* V5: Fjern .data.attributes fra media */}}
+{{ $hero_bilde := $comp_data.Topp.Bakgrunnsbilde.formats.medium.url}}
 {{ $ingres := $comp_data.Topp.Beskrivelse }}
-{{ $toppbilde := $comp_data.Bilde_topp.Bakgrunnsbilde.data.attributes}}
+{{ $toppbilde := $comp_data.Bilde_topp.Bakgrunnsbilde}}
 {{ $topptittel := $comp_data.Bilde_topp.Tittel }}
 {{ $tospalte := $comp_data.Tospalte.Tekst }}
-{{ $bilderad_1_bilde_1 := $comp_data.Bilderad1.Bilde1.data.attributes }}
-{{ $bilderad_1_bilde_2 := $comp_data.Bilderad1.Bilde2.data.attributes }}
-{{ $bilderad_1_bilde_3 := $comp_data.Bilderad1.Bilde3.data.attributes }}
-{{ $bilderad_2_bilde_1 := $comp_data.Bilderad2.Bilde1.data.attributes }}
-{{ $bilderad_2_bilde_2 := $comp_data.Bilderad2.Bilde2.data.attributes}}
-{{ $bilderad_2_bilde_3 := $comp_data.Bilderad2.Bilde3.data.attributes }}
+
+{{/* V5: Fjern .data.attributes fra alle bilder */}}
+{{ $bilderad_1_bilde_1 := $comp_data.Bilderad1.Bilde1 }}
+{{ $bilderad_1_bilde_2 := $comp_data.Bilderad1.Bilde2 }}
+{{ $bilderad_1_bilde_3 := $comp_data.Bilderad1.Bilde3 }}
+{{ $bilderad_2_bilde_1 := $comp_data.Bilderad2.Bilde1 }}
+{{ $bilderad_2_bilde_2 := $comp_data.Bilderad2.Bilde2 }}
+{{ $bilderad_2_bilde_3 := $comp_data.Bilderad2.Bilde3 }}
+
 {{ $tekst_med_sitat := $comp_data.Tekst_med_sitat }}
-{{ $tekst_med_sitat_bilde := $comp_data.Tekst_med_sitat.Bilde.data.attributes.formats.thumbnail.url }}
+{{ $tekst_med_sitat_bilde := $comp_data.Tekst_med_sitat.Bilde.formats.thumbnail.url }}
 {{ $fremhevet_tekst := $comp_data.Fremhevet_tekst }}
-{{ $fremhevet_tekst_bilde := $comp_data.Fremhevet_tekst.Bilde.data.attributes}}
+{{ $fremhevet_tekst_bilde := $comp_data.Fremhevet_tekst.Bilde}}
 {{ $tekst_med_sitat2 := $comp_data.Tekst_med_sitat2 }}
-{{ $tekst_med_sitat2_bilde := $comp_data.Tekst_med_sitat2.Bilde.data.attributes}}
+{{ $tekst_med_sitat2_bilde := $comp_data.Tekst_med_sitat2.Bilde}}
 {{ $enspalte := $comp_data.Tekst_enspalte.Tekst }}
 {{ $tekst_pa_bilde := $comp_data.Tekst_pa_bilde }}
-{{ $tekst_pa_bilde_bilde := $comp_data.Tekst_pa_bilde.Bilde.data.attributes }}
-{{ partial "top.html" (dict "meny" $meny_liste "title" $title "img" $comp_data.Topp.Bakgrunnsbilde.data.attributes "ingres" $ingres) }}
+{{ $tekst_pa_bilde_bilde := $comp_data.Tekst_pa_bilde.Bilde }}
+
+{{/* V5: Fjern .data.attributes fra partial */}}
+{{ partial "top.html" (dict "meny" $meny_liste "title" $title "img" $comp_data.Topp.Bakgrunnsbilde "ingres" $ingres) }}
+
 <div class="om--wrapper">
     <div class="toppbilde">
-        {{ partial "imgh" (dict "ctx" $toppbilde "src" $toppbilde.resources.url "alt" $toppbilde.assets.context.alt "holder" "LQTIP" "title" $toppbilde.assets.context.caption "source" "ext" "lazy" "false" "fade" "false")}}
+        {{/* V5: Endre til .url og .alternativeText */}}
+        {{ partial "imgh" (dict "ctx" $toppbilde "src" $toppbilde.url "alt" $toppbilde.alternativeText "holder" "LQTIP" "title" $toppbilde.caption "source" "ext" "lazy" "false" "fade" "false")}}
         <h2 class="sans">{{ $topptittel}}</h2>
     </div>
     <div class="tospalte">
@@ -69,13 +68,14 @@
     </div>
     <div class="bilderekke">
         <div class="bilderekke--wrap">
-        {{ partial "imgh" (dict "ctx" $bilderad_1_bilde_1 "src" $bilderad_1_bilde_1.assets.url "alt" $bilderad_1_bilde_1.assets.context.alt "holder" "LQTIP" "title" $bilderad_1_bilde_1.assets.context.caption "source" "ext")}}
+        {{/* V5: Endre til .url og .alternativeText */}}
+        {{ partial "imgh" (dict "ctx" $bilderad_1_bilde_1 "src" $bilderad_1_bilde_1.url "alt" $bilderad_1_bilde_1.alternativeText "holder" "LQTIP" "title" $bilderad_1_bilde_1.caption "source" "ext")}}
         </div>
         <div class="bilderekke--wrap">
-        {{ partial "imgh" (dict "ctx" $bilderad_1_bilde_2 "src" $bilderad_1_bilde_2.assets.url "alt" $bilderad_1_bilde_2.assets.context.alt "holder" "LQTIP" "title" $bilderad_1_bilde_2.assets.context.caption "source" "ext")}}
+        {{ partial "imgh" (dict "ctx" $bilderad_1_bilde_2 "src" $bilderad_1_bilde_2.url "alt" $bilderad_1_bilde_2.alternativeText "holder" "LQTIP" "title" $bilderad_1_bilde_2.caption "source" "ext")}}
         </div>
         <div class="bilderekke--wrap">
-        {{ partial "imgh" (dict "ctx" $bilderad_1_bilde_3 "src" $bilderad_1_bilde_3.assets.url "alt" $bilderad_1_bilde_3.assets.context.alt "holder" "LQTIP" "title" $bilderad_1_bilde_3.assets.context.caption "source" "ext")}}
+        {{ partial "imgh" (dict "ctx" $bilderad_1_bilde_3 "src" $bilderad_1_bilde_3.url "alt" $bilderad_1_bilde_3.alternativeText "holder" "LQTIP" "title" $bilderad_1_bilde_3.caption "source" "ext")}}
         </div>
     </div>
     <div class="sitat">
@@ -97,26 +97,28 @@
                 {{ $fremhevet_tekst.Tekst | markdownify}}
             </div>
         <div class="fremhevet--bilde">
-        {{ partial "imgh" (dict "ctx" $fremhevet_tekst_bilde "src" $fremhevet_tekst_bilde.assets.url "alt" $fremhevet_tekst_bilde.assets.context.alt "holder" "LQTIP" "title" $fremhevet_tekst_bilde.assets.context.caption "source" "ext" "big" "true")}}
+        {{/* V5: Endre til .url og .alternativeText */}}
+        {{ partial "imgh" (dict "ctx" $fremhevet_tekst_bilde "src" $fremhevet_tekst_bilde.url "alt" $fremhevet_tekst_bilde.alternativeText "holder" "LQTIP" "title" $fremhevet_tekst_bilde.caption "source" "ext" "big" "true")}}
         </div>
         </div>
     </div>
     {{ if not $tekst_med_sitat2.Venstrejustert }}
     <div class="sitat">
         {{ else }}
-
     <div class="sitat hoyre">
     {{ end }}
         <div class="sitat_tekst">{{ $tekst_med_sitat2.Tekst | markdownify }}</div>
         <div class="sitat_bilde">
             {{ with $tekst_med_sitat2_bilde }}
-        {{ partial "imgh" (dict "ctx" $tekst_med_sitat2_bilde "src" $tekst_med_sitat2_bilde.assets.url "alt" $tekst_med_sitat2_bilde.assets.context.alt "holder" "LQTIP" "title" $tekst_med_sitat2_bilde.assets.context.caption "source" "ext")}}
+        {{/* V5: Endre til .url og .alternativeText */}}
+        {{ partial "imgh" (dict "ctx" $tekst_med_sitat2_bilde "src" $tekst_med_sitat2_bilde.url "alt" $tekst_med_sitat2_bilde.alternativeText "holder" "LQTIP" "title" $tekst_med_sitat2_bilde.caption "source" "ext")}}
             {{ end }}
             <p>{{ $tekst_med_sitat2.Sitat }}</p>
         </div>
     </div>
     <div class="tekst-i-bilde">
-        {{ partial "imgh" (dict "ctx" $tekst_pa_bilde_bilde "src" $tekst_pa_bilde_bilde.assets.url "alt" $tekst_pa_bilde_bilde.assets.context.alt "holder" "LQTIP" "title" $tekst_pa_bilde_bilde.assets.context.caption "source" "ext" "big" "true")}}
+        {{/* V5: Endre til .url og .alternativeText */}}
+        {{ partial "imgh" (dict "ctx" $tekst_pa_bilde_bilde "src" $tekst_pa_bilde_bilde.url "alt" $tekst_pa_bilde_bilde.alternativeText "holder" "LQTIP" "title" $tekst_pa_bilde_bilde.caption "source" "ext" "big" "true")}}
         <div>{{ $tekst_pa_bilde.Tekst | markdownify }}</div> 
     </div>
     <div class="enspalte">
@@ -126,14 +128,15 @@
     </div>
     <div class="bilderekke">
         <div class="bilderekke--wrap">
-        {{ partial "imgh" (dict "ctx" $bilderad_2_bilde_1 "src" $bilderad_2_bilde_1.assets.url "alt" $bilderad_2_bilde_1.assets.context.alt "holder" "LQTIP" "title" $bilderad_2_bilde_1.assets.context.caption "source" "ext" "small" "true")}}
+        {{/* V5: Endre til .url og .alternativeText */}}
+        {{ partial "imgh" (dict "ctx" $bilderad_2_bilde_1 "src" $bilderad_2_bilde_1.url "alt" $bilderad_2_bilde_1.alternativeText "holder" "LQTIP" "title" $bilderad_2_bilde_1.caption "source" "ext" "small" "true")}}
         </div>
         <div class="bilderekke--wrap">
-        {{ partial "imgh" (dict "ctx" $bilderad_2_bilde_2 "src" $bilderad_2_bilde_2.assets.url "alt" $bilderad_2_bilde_2.assets.context.alt "holder" "LQTIP" "title" $bilderad_2_bilde_2.assets.context.caption "source" "ext" "small" "true")}}
+        {{ partial "imgh" (dict "ctx" $bilderad_2_bilde_2 "src" $bilderad_2_bilde_2.url "alt" $bilderad_2_bilde_2.alternativeText "holder" "LQTIP" "title" $bilderad_2_bilde_2.caption "source" "ext" "small" "true")}}
         </div>
         <div class="bilderekke--wrap">
-        {{ partial "imgh" (dict "ctx" $bilderad_2_bilde_3 "src" $bilderad_2_bilde_3.assets.url "alt" $bilderad_2_bilde_3.assets.context.alt "holder" "LQTIP" "title" $bilderad_2_bilde_3.assets.context.caption "source" "ext" "small" "true")}}
+        {{ partial "imgh" (dict "ctx" $bilderad_2_bilde_3 "src" $bilderad_2_bilde_3.url "alt" $bilderad_2_bilde_3.alternativeText "holder" "LQTIP" "title" $bilderad_2_bilde_3.caption "source" "ext" "small" "true")}}
         </div>
     </div>
+</div>
 {{ end }}
-

@@ -261,6 +261,11 @@ header .mobile-nav a {
     align-items: center;
     cursor: pointer;
     color: var(--primary-color);
+    text-decoration: none;
+}
+
+header .mobile-nav:hover a {
+    text-decoration: underline;
 }
 
 header.toggled nav {
@@ -346,11 +351,12 @@ header nav ul li {
 header nav a {
     border-bottom: 1px solid var(--base-color-2);
     color: var(--primary-color);
-    padding: 12px;
+    padding: 12px 10px;
     font-family: "Libre Baskerville";
     font-style: normal;
     text-decoration: none;
     display: block;
+    font-size: 14px;
 }
 
 header nav ul li:last-child a {
@@ -493,7 +499,7 @@ html {
 .logo img {
     aspect-ratio: 127/56;
     height: 56px;
-    max-width: 100px;
+    max-width: 170px;
 }
 
 main {

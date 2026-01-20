@@ -1,39 +1,51 @@
 {{ define "main" }}
 {{ $strapi_url := (getenv "HUGO_strapi_url")}}
 
-{{ $strapi_single_types := print $strapi_url "side-kontakt?populate[0]=Topp.Bakgrunnsbilde"
-    "&"
-    "populate[1]=Tekst"
-}}
-{{ $strapi_types_kontakt := print $strapi_url "kontaktinfo?populate=*"}}
+{{/* V5: Bruk populate=* */}}
+{{ $strapi_single_types := print $strapi_url 
+    "side-kontakt"
+    "?populate[Topp][populate]=Bakgrunnsbilde"
+    "&populate[Tekst]=*"
+    "&populate[metadata][populate]=Metabilde"
+}}{{ $strapi_types_kontakt := print $strapi_url "kontaktinfo?populate=*"}}
 {{ $opts := dict
     "headers" (dict "Authorization" (getenv "HUGO_strapi_bearer"))
 }}
 {{ $kontakt := resources.GetRemote $strapi_types_kontakt $opts | unmarshal }}
 {{ $components := resources.GetRemote $strapi_single_types $opts | unmarshal }}
-{{ $comp_data := $components.data.attributes }}
+
+{{/* V5: Fjern .attributes */}}
+{{ $comp_data := $components.data }}
 {{ $title := $comp_data.Topp.Tittel}}
-{{ $hero_bilde := $comp_data.Topp.Bakgrunnsbilde.data.attributes.formats.medium.url}}
+
+{{/* V5: Fjern .data.attributes fra media */}}
+{{ $hero_bilde := $comp_data.Topp.Bakgrunnsbilde.formats.medium.url}}
 {{ $ingres := $comp_data.Topp.Beskrivelse }}
 {{ $tekst := $comp_data.Tekst }}
-{{ partial "top.html" (dict "title" $title "img" $comp_data.Topp.Bakgrunnsbilde.data.attributes "ingres" $ingres) }}
+
+{{/* V5: Fjern .data.attributes fra partial */}}
+{{ partial "top.html" (dict "title" $title "img" $comp_data.Topp.Bakgrunnsbilde "ingres" $ingres) }}
+
     <div class="kontakt">
         <div class="kontakt--wrapper">
             <div class="kontakt--tekst">
                 <h2>Vår lokasjon</h2>
-                <p>{{ $kontakt.data.attributes.Bedriftsnavn }}</p>
-                <p>{{ $kontakt.data.attributes.Gateadresse}} {{ $kontakt.data.attributes.Gatenummer}}<br />
-                {{ $kontakt.data.attributes.Postnummer }} {{ $kontakt.data.attributes.Poststed }}
+                {{/* V5: Fjern .attributes fra kontakt */}}
+                <p>{{ $kontakt.data.Bedriftsnavn }}</p>
+                <p>{{ $kontakt.data.Gateadresse}} {{ $kontakt.data.Gatenummer}}<br />
+                {{ $kontakt.data.Postnummer }} {{ $kontakt.data.Poststed }}
                 </p>
             </div>
             <div id="map"></div>
             <br/>
             <h3>Ring oss</h3>
-            <p>{{ $kontakt.data.attributes.Telefonnummer }}</p>
+            {{/* V5: Fjern .attributes */}}
+            <p>{{ $kontakt.data.Telefonnummer }}</p>
             <h3>Besøk oss på sosiale medier</h3>
         <div class="some">
-            <a href="{{ $kontakt.data.attributes.Facebook_lenke }}"><svg xmlns="http://www.w3.org/2000/svg" width="32" fill="#B98A54" height="32" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3 8h-1.35c-.538 0-.65.221-.65.778v1.222h2l-.209 2h-1.791v7h-3v-7h-2v-2h2v-2.308c0-1.769.931-2.692 3.029-2.692h1.971v3z"/></svg></a>
-            <a href="{{ $kontakt.data.attributes.Instagram_lenke }}"><svg xmlns="http://www.w3.org/2000/svg" fill="#B98A54" width="32" height="32" viewBox="0 0 24 24"><path d="M14.829 6.302c-.738-.034-.96-.04-2.829-.04s-2.09.007-2.828.04c-1.899.087-2.783.986-2.87 2.87-.033.738-.041.959-.041 2.828s.008 2.09.041 2.829c.087 1.879.967 2.783 2.87 2.87.737.033.959.041 2.828.041 1.87 0 2.091-.007 2.829-.041 1.899-.086 2.782-.988 2.87-2.87.033-.738.04-.96.04-2.829s-.007-2.09-.04-2.828c-.088-1.883-.973-2.783-2.87-2.87zm-2.829 9.293c-1.985 0-3.595-1.609-3.595-3.595 0-1.985 1.61-3.594 3.595-3.594s3.595 1.609 3.595 3.594c0 1.985-1.61 3.595-3.595 3.595zm3.737-6.491c-.464 0-.84-.376-.84-.84 0-.464.376-.84.84-.84.464 0 .84.376.84.84 0 .463-.376.84-.84.84zm-1.404 2.896c0 1.289-1.045 2.333-2.333 2.333s-2.333-1.044-2.333-2.333c0-1.289 1.045-2.333 2.333-2.333s2.333 1.044 2.333 2.333zm-2.333-12c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.958 14.886c-.115 2.545-1.532 3.955-4.071 4.072-.747.034-.986.042-2.887.042s-2.139-.008-2.886-.042c-2.544-.117-3.955-1.529-4.072-4.072-.034-.746-.042-.985-.042-2.886 0-1.901.008-2.139.042-2.886.117-2.544 1.529-3.955 4.072-4.071.747-.035.985-.043 2.886-.043s2.14.008 2.887.043c2.545.117 3.957 1.532 4.071 4.071.034.747.042.985.042 2.886 0 1.901-.008 2.14-.042 2.886z"/></svg></a>
+            {{/* V5: Fjern .attributes fra lenker */}}
+            <a href="{{ $kontakt.data.Facebook_lenke }}"><svg xmlns="http://www.w3.org/2000/svg" width="32" fill="#B98A54" height="32" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3 8h-1.35c-.538 0-.65.221-.65.778v1.222h2l-.209 2h-1.791v7h-3v-7h-2v-2h2v-2.308c0-1.769.931-2.692 3.029-2.692h1.971v3z"/></svg></a>
+            <a href="{{ $kontakt.data.Instagram_lenke }}"><svg xmlns="http://www.w3.org/2000/svg" fill="#B98A54" width="32" height="32" viewBox="0 0 24 24"><path d="M14.829 6.302c-.738-.034-.96-.04-2.829-.04s-2.09.007-2.828.04c-1.899.087-2.783.986-2.87 2.87-.033.738-.041.959-.041 2.828s.008 2.09.041 2.829c.087 1.879.967 2.783 2.87 2.87.737.033.959.041 2.828.041 1.87 0 2.091-.007 2.829-.041 1.899-.086 2.782-.988 2.87-2.87.033-.738.04-.96.04-2.829s-.007-2.09-.04-2.828c-.088-1.883-.973-2.783-2.87-2.87zm-2.829 9.293c-1.985 0-3.595-1.609-3.595-3.595 0-1.985 1.61-3.594 3.595-3.594s3.595 1.609 3.595 3.594c0 1.985-1.61 3.595-3.595 3.595zm3.737-6.491c-.464 0-.84-.376-.84-.84 0-.464.376-.84.84-.84.464 0 .84.376.84.84 0 .463-.376.84-.84.84zm-1.404 2.896c0 1.289-1.045 2.333-2.333 2.333s-2.333-1.044-2.333-2.333c0-1.289 1.045-2.333 2.333-2.333s2.333 1.044 2.333 2.333zm-2.333-12c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.958 14.886c-.115 2.545-1.532 3.955-4.071 4.072-.747.034-.986.042-2.887.042s-2.139-.008-2.886-.042c-2.544-.117-3.955-1.529-4.072-4.072-.034-.746-.042-.985-.042-2.886 0-1.901.008-2.139.042-2.886.117-2.544 1.529-3.955 4.072-4.071.747-.035.985-.043 2.886-.043s2.14.008 2.887.043c2.545.117 3.957 1.532 4.071 4.071.034.747.042.985.042 2.886 0 1.901-.008 2.14-.042 2.886z"/></svg></a>
             <a aria-label="Gå til Hudd" href="https://hudd.no/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 112 33" fill="none" width="24" height="24" color="#777" class="css-1bpuuwv"><path d="M111.107 30.4063C111.107 31.0821 110.579 31.6076 109.899 31.6076H106.122C105.442 31.6076 104.913 31.0821 104.913 30.4063V29.3552C102.647 31.3073 100.003 32.2834 96.9812 32.2834C95.1682 32.2834 93.5063 31.9079 91.8444 31.2322C90.2581 30.5565 88.8228 29.6555 87.6897 28.4542C86.5565 27.328 85.5745 25.9765 84.8946 24.3998C84.2148 22.8231 83.9126 21.1713 83.9126 19.4444C83.9126 17.7176 84.2148 16.0658 84.8946 14.4891C85.5745 12.9123 86.481 11.5609 87.6897 10.3596C88.8228 9.23335 90.2581 8.25729 91.8444 7.58156C93.4308 6.90583 95.1682 6.53042 96.9812 6.53042C99.9273 6.53042 102.571 7.50648 104.838 9.38352V1.49996C104.838 0.824231 105.366 0.29866 106.046 0.29866H109.899C110.579 0.29866 111.107 0.824231 111.107 1.49996V30.4063ZM104.989 19.4444C104.989 17.3421 104.233 15.6153 102.798 14.1887C101.363 12.7622 99.6252 12.0114 97.51 12.0114C95.4704 12.0114 93.733 12.7622 92.2977 14.1887C90.8624 15.6153 90.107 17.4172 90.107 19.4444C90.107 21.4716 90.8624 23.2736 92.2977 24.7001C93.733 26.1267 95.4704 26.8775 97.51 26.8775C99.5496 26.8775 101.287 26.1267 102.722 24.7001C104.233 23.2736 104.989 21.4716 104.989 19.4444Z" fill="currentColor"></path><path d="M80.438 30.4063C80.438 31.0821 79.9092 31.6076 79.2293 31.6076H75.4523C74.7724 31.6076 74.2436 31.0821 74.2436 30.4063V29.3552C71.9774 31.3073 69.3334 32.2834 66.3118 32.2834C64.4988 32.2834 62.8369 31.9079 61.175 31.2322C59.5886 30.5565 58.1533 29.6555 57.0202 28.4542C55.8871 27.328 54.9051 25.9765 54.2252 24.3998C53.5453 22.8231 53.2432 21.1713 53.2432 19.4444C53.2432 17.7176 53.5453 16.0658 54.2252 14.4891C54.9051 12.9123 55.8116 11.5609 57.0202 10.3596C58.1533 9.23335 59.5886 8.25729 61.175 7.58156C62.7614 6.90583 64.4988 6.53042 66.3118 6.53042C69.2579 6.53042 71.9018 7.50648 74.1681 9.38352V1.49996C74.1681 0.824231 74.6969 0.29866 75.3767 0.29866H79.2293C79.9092 0.29866 80.438 0.824231 80.438 1.49996V9.00811V16.5163V30.4063ZM74.3192 19.4444C74.3192 17.3421 73.5637 15.6153 72.1285 14.1887C70.6932 12.7622 68.9557 12.0114 66.8406 12.0114C64.801 12.0114 63.0635 12.7622 61.6282 14.1887C60.193 15.6153 59.4375 17.4172 59.4375 19.4444C59.4375 21.4716 60.193 23.2736 61.6282 24.7001C63.0635 26.1267 64.801 26.8775 66.8406 26.8775C68.8802 26.8775 70.6176 26.1267 72.0529 24.7001C73.5637 23.2736 74.3192 21.4716 74.3192 19.4444Z" fill="currentColor"></path><path d="M27.1812 22.8231V7.7317C27.1812 7.05597 27.7099 6.5304 28.3898 6.5304H32.2424C32.9223 6.5304 33.4511 7.05597 33.4511 7.7317V21.6218C33.4511 23.1234 33.9043 24.3998 34.8864 25.3758C35.7929 26.3519 37.077 26.8775 38.5879 26.8775C40.0987 26.8775 41.3074 26.427 42.2894 25.4509C43.2714 24.4749 43.7247 23.1985 43.7247 21.6968V7.7317C43.7247 7.05597 44.2535 6.5304 44.9333 6.5304H48.7859C49.4658 6.5304 49.9946 7.05597 49.9946 7.7317V30.5565C49.9946 31.2322 49.4658 31.7578 48.7859 31.7578H44.9333C44.2535 31.7578 43.7247 31.2322 43.7247 30.5565V29.5804C41.9117 31.3824 39.721 32.3584 37.0015 32.3584C34.2065 32.3584 31.8647 31.4574 30.0517 29.6555C28.0876 27.7034 27.1812 25.526 27.1812 22.8231Z" fill="currentColor"></path><path d="M23.6305 16.2159V30.5565C23.6305 31.2322 23.1017 31.7578 22.4218 31.7578H18.5692C17.8893 31.7578 17.3606 31.2322 17.3606 30.5565V18.9189C17.3606 17.3422 16.9073 16.0658 15.9253 15.1648C15.1699 14.414 14.2634 13.9635 13.1303 13.8133C12.8281 13.7382 12.6015 13.7382 12.2993 13.7382C10.7885 13.7382 9.57982 14.1887 8.59778 15.1648C7.61575 16.0658 7.1625 17.3422 7.1625 18.9189V30.4814C7.1625 31.1571 6.63371 31.6827 5.95384 31.6827H2.10124C1.42137 31.6827 0.892578 31.1571 0.892578 30.4814V1.42489C0.892578 0.749157 1.42137 0.223587 2.10124 0.223587H5.95384C6.63371 0.223587 7.1625 0.749157 7.1625 1.42489V6.6806L3.65297 12.9443L9.80644 8.03206L11.2417 7.056C11.9971 6.53043 13.0547 6.53043 13.8101 7.056L22.5729 13.7382C23.1772 14.1887 23.6036 14.7442 23.6305 15.5846C23.6379 15.8177 23.6305 15.9907 23.6305 16.2159Z" fill="currentColor"></path></svg></a>
         </div>
         </div>
@@ -41,25 +53,21 @@
                 <a class="button" href="/om-oss">Vår filosofi</a>
                 <a class="button" href="/apningstider">Åpningstider</a>
             </div>
-    </div><script>
+    </div>
+<script>
 	mapboxgl.accessToken = 'pk.eyJ1IjoibWFyZWxpdXMiLCJhIjoiY2x4bGZ5b3U0MDAwczJpc2FpaGNkcW4xcyJ9.4Mr7a6G0R-VT8VPoftP4eQ';
     const map = new mapboxgl.Map({
-        container: 'map', // container ID
+        container: 'map',
         style: "mapbox://styles/marelius/clxlghn5h00f701r2gnox303p",
-        center: [11.193769, 59.153188], // starting position [lng, lat]. Note that lat must be set between -90 and 90
-        zoom: 17 // starting zoom
+        center: [11.193769, 59.153188],
+        zoom: 17
     });
     map.on('load', () => {
-        // Load an image from an external URL.
         map.loadImage(
             'https://res.cloudinary.com/mikkesblogg/image/upload/v1718346587/lokkevika-handel-logo-black_y5q8ls.png',
             (error, image) => {
                 if (error) throw error;
-
-                // Add the image to the map style.
                 map.addImage('logo', image);
-
-                // Add a data source containing one point feature.
                 map.addSource('point', {
                     'type': 'geojson',
                     'data': {
@@ -75,20 +83,17 @@
                         ]
                     }
                 });
-
-                // Add a layer to use the image to represent the data.
                 map.addLayer({
                     'id': 'points',
                     'type': 'symbol',
-                    'source': 'point', // reference the data source
+                    'source': 'point',
                     'layout': {
-                        'icon-image': 'logo', // reference the image
+                        'icon-image': 'logo',
                         'icon-size': 0.1
                     }
                 });
             }
         );
     });
-</script>{{ end }}
-
-
+</script>
+{{ end }}

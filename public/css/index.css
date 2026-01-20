@@ -1,11 +1,8 @@
 .bilde_fullbredde {
     height: 30vw;
-    max-height: 300px;
+    /*max-height: 300px;*/
     overflow: hidden;
     position: relative;
-}
-.bilde_fullbredde figure {
-    display: absolute;
 }
 .bilde_fullbredde img {
     aspect-ratio: 3/1;
@@ -52,6 +49,7 @@
 .hero--content_img {
     grid-area: img;
     margin: 0 calc(0px - var(--padding-desktop));
+    position: relative;
 }
 .hero--content_img figure > div {
     height: 100%;
@@ -79,6 +77,13 @@
             'text img'
             'text img';
         padding: 0;
+    }
+    .hero figure {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right:0;
     }
     .hero img {
         aspect-ratio: unset;
@@ -180,7 +185,7 @@
 
 @media only screen and (min-width: 1200px) {
     .innehaverne figure {
-        left: 10vw;
+        left: calc(50% - 510px);
     }
 }
 
@@ -364,13 +369,15 @@
 }
 .referanser--wrap {
     align-items: center;
-    background: hsl(47, 37%, 93%, 90%);
     display: flex;
     flex-direction: column;
     gap: 40px;
     margin: 0 auto;
     max-width: var(--max-width);
     padding: var(--section-padding) var(--padding-desktop);
+}
+.referanser--wrap-outer {
+    background: hsl(47, 37%, 93%, 90%);
 }
 
 .referanser h2 {
@@ -411,12 +418,17 @@
 } 
 .salgspunkter {
     background: var(--base-color-2);
+    padding: var(--section-padding) var(--padding-desktop);
+    
+}
+
+.salgspunkter--wrap {
+    background: var(--base-color-2);
     display: flex;
     flex-direction: column;
     gap: 56px;
     margin: 0 auto;
-    max-width: var(--max-width);
-    padding: var(--section-padding) var(--padding-desktop);
+    /*max-width: var(--max-width);*/
 }
 
 .salgspunkter h2 {

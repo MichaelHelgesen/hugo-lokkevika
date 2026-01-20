@@ -1,32 +1,48 @@
 {{ define "main" }}
 {{ $strapi_url := (getenv "HUGO_strapi_url")}}
-{{ $strapi_single_types := print $strapi_url "side-meny?populate[0]=Topp.Bakgrunnsbilde" }}
-{{ $strapi_collection_meny := print $strapi_url "menies?populate=*" }}
+{{/* V5: Bruk populate=* */}}
+{{ $strapi_single_types := print $strapi_url 
+    "side-meny"
+    "?populate[Topp][populate]=Bakgrunnsbilde"
+}}
+{{ $strapi_collection_meny := print $strapi_url 
+    "menies?populate=*"
+}}
 {{ $opts := dict
     "headers" (dict "Authorization" (getenv "HUGO_strapi_bearer"))
 }}
 {{ $components := resources.GetRemote $strapi_single_types $opts | unmarshal }}
 {{ $meny_liste := resources.GetRemote $strapi_collection_meny $opts | unmarshal}}
 
-{{ $comp_data := $components.data.attributes }}
+{{/* V5: Fjern .attributes */}}
+{{ $comp_data := $components.data }}
 {{ $title := $comp_data.Topp.Tittel}}
-{{ $hero_bilde := $comp_data.Topp.Bakgrunnsbilde.data.attributes.formats.medium.url}}
+
+{{/* V5: Fjern .data.attributes fra media */}}
+{{ $hero_bilde := $comp_data.Topp.Bakgrunnsbilde.formats.medium.url}}
 {{ $ingres := $comp_data.Topp.Beskrivelse }}
 
+{{/* V5: Fjern .data.attributes fra partial */}}
+{{ partial "top.html" (dict "meny" $meny_liste "title" $title "img" $comp_data.Topp.Bakgrunnsbilde "ingres" $ingres) }}
 
-{{ partial "top.html" (dict "meny" $meny_liste "title" $title "img" $comp_data.Topp.Bakgrunnsbilde.data.attributes "ingres" $ingres) }}
 <div class="meny--page" >
     <div class="absolute" style="background:url('{{ (resources.Get "/bilder/blomst-repeat.webp").RelPermalink }}')"></div>
-    {{ range sort $meny_liste.data ".attributes.rank" "asc"}}
+    
+    {{/* V5: Sort direkte på .rank, ikke .attributes.rank */}}
+    {{ range sort $meny_liste.data ".rank" "asc" }}
         <div class="meny--wrapper">
             <div class="tittel">
-                <div class="ikon" id="{{ .id }}">
-                    <img src="{{ .attributes.Ikon.data.attributes.url }}" /> 
+                {{/* V5: Bruk .documentId i stedet for .id */}}
+                <div class="ikon" id="{{ .documentId }}">
+                    {{/* V5: Fjern .data.attributes fra Ikon */}}
+                    <img src="{{ .Ikon.url }}" /> 
                 </div>
-                <h2>{{ .attributes.Tittel }}</h2>
-                <p class="beskrivelse">{{ .attributes.Beskrivelse }}</p>
+                {{/* V5: Fjern .attributes */}}
+                <h2>{{ .Tittel }}</h2>
+                <p class="beskrivelse">{{ .Beskrivelse }}</p>
             </div>
-            {{ range .attributes.Varer }}
+            {{/* V5: Varer er direkte tilgjengelig */}}
+            {{ range .Varer }}
                 <div class="meny--wrapper_enhet">
                     <div class="meny--wrapper_enhet--beskrivelse">
                         <h3>{{ .Tittel }}</h3>
@@ -45,5 +61,5 @@
             {{ end }}
         </div>
     {{ end }}
-<div>
+</div>
 {{ end }}

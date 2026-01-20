@@ -1,59 +1,51 @@
 {{ define "main" }}
 {{ $strapi_url := (getenv "HUGO_strapi_url")}}
-{{ $strapi_single_types := print 
-    $strapi_url "side-hjem?populate[0]=Hero.Bilde" 
-    "&" 
-    "populate[1]=Innehaverne"
-    "&"
-    "populate[2]=Bilde_Fullbredde.Bilde"
-    "&"
-    "populate[3]=Meny"
-    "&"
-    "populate[4]=Salgspunkter"
-    "&"
-    "populate[5]=Bilde_Fullbredde_2.Bilde"
-    "&"
-    "populate[6]=Referanser"
-    "&"
-    "populate[8]=Tjeneste.Ikon"
-    "&"
-    "populate[9]=Referanse.Bilde"
-    "&"
-    "populate[10]=Moteplass.Bilde1"
-    "&"
-    "populate[11]=Moteplass.Bilde2"
-    "&"
-    "populate[12]=Moteplass.Bilde3"
-    "&"
-    "populate[13]=Moteplass.Bilde4"
-    "&"
-    "populate[14]=Moteplass.Bilde5"
-}}
-{{ $strapi_collection_meny := print $strapi_url "menies?populate=*" }}
+{{/* V5: Bruk populate=* */}}
+{{ $strapi_single_types := print $strapi_url 
+    "side-hjem"
+    "?populate[Hero][populate]=Bilde"
+    "&populate[Innehaverne]=*"
+    "&populate[Bilde_Fullbredde][populate]=Bilde"
+    "&populate[Meny]=*"
+    "&populate[Salgspunkter]=*"
+    "&populate[Bilde_Fullbredde_2][populate]=Bilde"
+    "&populate[Referanser]=*"
+    "&populate[Tjeneste][populate]=Ikon"
+    "&populate[Referanse][populate]=Bilde"
+    "&populate[Moteplass][populate][0]=Bilde1"
+    "&populate[Moteplass][populate][1]=Bilde2"
+    "&populate[Moteplass][populate][2]=Bilde3"
+    "&populate[Moteplass][populate][3]=Bilde4"
+    "&populate[Moteplass][populate][4]=Bilde5"
+}}{{ $strapi_collection_meny := print $strapi_url "menies?populate=*" }}
 {{ $opts := dict
     "headers" (dict "Authorization" (getenv "HUGO_strapi_bearer"))
 }}
 {{ $components := resources.GetRemote $strapi_single_types $opts | unmarshal }}
 {{ $meny_liste := resources.GetRemote $strapi_collection_meny $opts }}
 
-{{ $comp_data := $components.data.attributes }}
+{{/* V5: Fjern .attributes */}}
+{{ $comp_data := $components.data }}
 {{ $hero := $comp_data.Hero}}
-{{ $hero_bilde := $comp_data.Hero.Bilde.data.attributes.formats.medium.url}}
-{{ $hero_bilde2 := $comp_data.Hero.Bilde.data.attributes }}
+
+{{/* V5: Fjern .data.attributes fra media */}}
+{{ $hero_bilde := $comp_data.Hero.Bilde.formats.medium.url}}
+{{ $hero_bilde2 := $comp_data.Hero.Bilde }}
 {{ $innehaverne := $comp_data.Innehaverne }}
-{{ $bilde_fullbredde_1 := $comp_data.Bilde_Fullbredde.Bilde.data.attributes }}
+{{ $bilde_fullbredde_1 := $comp_data.Bilde_Fullbredde.Bilde }}
 {{ $meny := $comp_data.Meny }}
 {{ $salgspunkter := $comp_data.Salgspunkter }}
-{{ $bilde_fullbredde_2 := $comp_data.Bilde_Fullbredde_2.Bilde.data.attributes }}
+{{ $bilde_fullbredde_2 := $comp_data.Bilde_Fullbredde_2.Bilde }}
 {{ $referanser := $comp_data.Referanser }}
 {{ $moteplass := $comp_data.Moteplass }}
-{{ $moteplass_bilde1 := $comp_data.Moteplass.Bilde1.data.attributes }}
-{{ $moteplass_bilde2 := $comp_data.Moteplass.Bilde2.data.attributes }}
-{{ $moteplass_bilde3 := $comp_data.Moteplass.Bilde3.data.attributes }}
-{{ $moteplass_bilde4 := $comp_data.Moteplass.Bilde4.data.attributes }}
-{{ $moteplass_bilde5 := $comp_data.Moteplass.Bilde5.data.attributes }}
+{{ $moteplass_bilde1 := $comp_data.Moteplass.Bilde1 }}
+{{ $moteplass_bilde2 := $comp_data.Moteplass.Bilde2 }}
+{{ $moteplass_bilde3 := $comp_data.Moteplass.Bilde3 }}
+{{ $moteplass_bilde4 := $comp_data.Moteplass.Bilde4 }}
+{{ $moteplass_bilde5 := $comp_data.Moteplass.Bilde5 }}
 {{ $tjenesteliste := $comp_data.Tjeneste }}
 {{ $referanseliste := $comp_data.Referanse }}
+
 <section>
 <div class="hero"> 
     <div class="hero--background" style="background: url('{{ (resources.Get "/bilder/blomst2.webp").RelPermalink }}')"></div>
@@ -66,30 +58,15 @@
         </div>
     </div>
     <div class="hero--content_img">
-        {{ partial "imgh" (dict "ctx" $hero_bilde2 "src" $hero_bilde2.resources.url "alt" $hero_bilde2.resources.context.alt "holder" "LQTIP" "title" $hero_bilde2.resources.context.caption "source" "ext" "lazy" "false" "fade" "false" "big" "true")}}
+        {{/* V5: Endre til .url og .alternativeText */}}
+        {{ partial "imgh" (dict "ctx" $hero_bilde2 "src" $hero_bilde2.url "alt" $hero_bilde2.alternativeText "holder" "LQTIP" "title" $hero_bilde2.caption "source" "ext" "lazy" "false" "fade" "false" "big" "true")}}
     </div>
+</div>
 </section>
-    <!--
-    <div class="hero">
-        <div class="hero--wrapper" >
-            <div class="absolute" style="background: url('{{ (resources.Get "/bilder/blomst.webp").RelPermalink }}')"></div>
-            <div class="hero--content" >
-                <div>
-                    <h1>{{ $hero.Tittel }}</h1>
-                    <p>{{ $hero.Introtekst}}</p>
-                    <div class="hero--content_buttons">
-                        <a href="{{ relURL "/apningstider" }}" class="button inverted">Åpningstider</a>
-                        <a href="{{ relURL "/meny" }}" class="button outline">Meny</a>
-                    </div>
-                </div>
-            </div>
-            <div class="hero--image" style="background-image: url('{{ $hero_bilde }}')">
-            </div>
-        </div>
-    </div> --> 
-    <section>    
+
+<section>    
     <div class="innehaverne">
-            {{ partial "imgh" (dict "ctx" . "src" "/bilder/innehaverne3.png" "alt" $hero_bilde2.resources.context.alt "holder" "LQTIP" "title" $hero_bilde2.resources.context.caption "small" "true")}}
+        {{ partial "imgh" (dict "ctx" . "src" "/bilder/innehaverne3.png" "alt" $hero_bilde2.alternativeText "holder" "LQTIP" "title" $hero_bilde2.caption "small" "true")}}
         <div class="innehaverne--image">
         </div>
         <div class="innehaverne--content">
@@ -98,94 +75,106 @@
             <a class="button" href="/om-oss">Vår filosofi</a>
         </div>
     </div>
-    </section>
-    <div class="bilde_fullbredde">
-        {{ partial "imgh" (dict "ctx" $bilde_fullbredde_1 "src" $bilde_fullbredde_1.resources.url "alt" $bilde_fullbredde_1.resources.context.alt "holder" "LQTIP" "title" $bilde_fullbredde_1.resources.context.caption "source" "ext" "small" "true")}}
+</section>
+
+<div class="bilde_fullbredde">
+    {{/* V5: Endre til .url og .alternativeText */}}
+    {{ partial "imgh" (dict "ctx" $bilde_fullbredde_1 "src" $bilde_fullbredde_1.url "alt" $bilde_fullbredde_1.alternativeText "holder" "LQTIP" "title" $bilde_fullbredde_1.caption "source" "ext" "small" "true")}}
+</div>
+
+<section class="meny">
+    <div class="absolute" style="background: url('{{ (resources.Get "/bilder/blomst-repeat.webp").RelPermalink }}')">
     </div>
-    
-    <section class="meny">
-            <div class="absolute" style="background: url('{{ (resources.Get "/bilder/blomst-repeat.webp").RelPermalink }}')">
-            </div>
-        <div class="meny--wrap">
-            <h2>{{ $meny.Tittel }}</h2>        
-            <div class="meny--liste">
-                {{ with $meny_liste }}
-                    {{ $data := unmarshal .Content }}
-                    {{range $data.data}}
-                        <div class="meny--liste_enhet">
-                            {{ if .attributes.Bilde.data }}
-                                {{ $url := .attributes.Bilde.data.attributes.url}}
-                                <div class="meny--liste_enhet--image-wrapper">
-        {{ partial "imgh" (dict "ctx" .attributes.Bilde.data.attributes "src" $url "alt" "tets" "holder" "LQTIP" "title" "test" "source" "ext")}}
-                                </div>
-                                <a href="/meny#{{ .id }}" class="button">{{.attributes.Tittel}}</a>
-                            {{ end }}
-                        </div>
-                    {{end}}
-                {{ end }}
-            </div>
-        </div>
-    </section>
-    <section class="salgspunkter">
-        <div class="salgspunkter--wrap">
-            <h2>{{ $salgspunkter.Tittel }}</h2>
-            <div class="salgspunkter--liste">
-                    {{range $tjenesteliste}}
-                        <div class="salgspunkter--liste_enhet">
-                            {{ $url := .Ikon.data.attributes.url}}
-                            <div class="ikon">
-                                <img loading=”lazy” src="{{$url}}" alt="Ikon som illustrerer {{.Tittel}}">
+    <div class="meny--wrap">
+        <h2>{{ $meny.Tittel }}</h2>        
+        <div class="meny--liste">
+            {{ with $meny_liste }}
+                {{ $data := unmarshal .Content }}
+                {{/* V5: Fjern .attributes og .data */}}
+                {{range $data.data}}
+                    <div class="meny--liste_enhet">
+                        {{ if .Bilde }}
+                            {{ $url := .Bilde.url}}
+                            <div class="meny--liste_enhet--image-wrapper">
+                                {{ partial "imgh" (dict "ctx" .Bilde "src" $url "alt" .Tittel "holder" "LQTIP" "title" .Tittel "source" "ext")}}
                             </div>
-                            <h3>{{.Tittel}}</h3>
-                            <p>{{ .Beskrivelse }}</p>
-                        </div>
-                    {{end}}
-            </div>
+                            {{/* V5: Bruk .documentId i stedet for .id */}}
+                            <a href="/meny#{{ .documentId }}" class="button">{{ .Tittel }}</a>
+                        {{ end }}
+                    </div>
+                {{end}}
+            {{ end }}
         </div>
-    </section>
-    <div class="bilde_fullbredde">
-        {{ partial "imgh" (dict "ctx" $bilde_fullbredde_2 "src" $bilde_fullbredde_2.resources.url "alt" $bilde_fullbredde_2.resources.context.alt "holder" "LQTIP" "title" $bilde_fullbredde_1.resources.context.caption "source" "ext" "small" "true")}}
     </div>
-    <section class="referanser" style="background:url('{{ (resources.Get "/bilder/blomster-bg.webp").RelPermalink }}')">
-        <div class="referanser--wrap-outer">
+</section>
+
+<section class="salgspunkter">
+    <div class="salgspunkter--wrap">
+        <h2>{{ $salgspunkter.Tittel }}</h2>
+        <div class="salgspunkter--liste">
+            {{range $tjenesteliste}}
+                <div class="salgspunkter--liste_enhet">
+                    {{/* V5: Fjern .data.attributes */}}
+                    {{ $url := .Ikon.url}}
+                    <div class="ikon">
+                        <img loading="lazy" src="{{$url}}" alt="Ikon som illustrerer {{.Tittel}}">
+                    </div>
+                    <h3>{{.Tittel}}</h3>
+                    <p>{{ .Beskrivelse }}</p>
+                </div>
+            {{end}}
+        </div>
+    </div>
+</section>
+
+<div class="bilde_fullbredde">
+    {{/* V5: Endre til .url og .alternativeText */}}
+    {{ partial "imgh" (dict "ctx" $bilde_fullbredde_2 "src" $bilde_fullbredde_2.url "alt" $bilde_fullbredde_2.alternativeText "holder" "LQTIP" "title" $bilde_fullbredde_2.caption "source" "ext" "small" "true")}}
+</div>
+
+<section class="referanser" style="background:url('{{ (resources.Get "/bilder/blomster-bg.webp").RelPermalink }}')">
+    <div class="referanser--wrap-outer">
         <div class="referanser--wrap">
             <h2>{{ $referanser.Tittel }}</h2>
             <div class="referanser--liste">
-                    {{range $referanseliste}}
-                        <div class="referanser--liste_enhet">
-                            {{ $url := .Bilde.data.attributes.formats.medium.url}}
-                            <div class="referanser--liste_enhet--bilde-wrap">
-        {{ partial "imgh" (dict "ctx" .Bilde.data.attributes "src" $url "alt" "a" "holder" "LQTIP" "title" "e" "source" "ext" "small" "true")}}
-                            </div>
-                            <h3>{{.Tittel}}</h3>
+                {{range $referanseliste}}
+                    <div class="referanser--liste_enhet">
+                        {{/* V5: Fjern .data.attributes */}}
+                        {{ $url := .Bilde.formats.medium.url}}
+                        <div class="referanser--liste_enhet--bilde-wrap">
+                            {{ partial "imgh" (dict "ctx" .Bilde "src" $url "alt" .Tittel "holder" "LQTIP" "title" .Tittel "source" "ext" "small" "true")}}
                         </div>
-                    {{end}}
+                        <h3>{{.Tittel}}</h3>
+                    </div>
+                {{end}}
             </div>
             <a class="button" href="/meny">Se menyen</a>
         </div>
+    </div>
+</section>
+
+<section>
+    <div class="grid-test">
+        <div class="bilde1">
+            {{/* V5: Endre til .url og .alternativeText */}}
+            {{ partial "imgh" (dict "ctx" $moteplass_bilde1 "src" $moteplass_bilde1.url "alt" $moteplass_bilde1.alternativeText "holder" "LQTIP" "title" $moteplass_bilde1.caption "source" "ext")}}
         </div>
-    </section>
-    <section>
-        <div class="grid-test">
-            <div class="bilde1">
-        {{ partial "imgh" (dict "ctx" $moteplass_bilde1 "src" $moteplass_bilde1.resources.url "alt" $moteplass_bilde1.resources.context.alt "holder" "LQTIP" "title" $moteplass_bilde1.resources.context.caption "source" "ext")}}
-            </div>
-            <div class="bilde2">
-        {{ partial "imgh" (dict "ctx" $moteplass_bilde2 "src" $moteplass_bilde2.resources.url "alt" $moteplass_bilde2.resources.context.alt "holder" "LQTIP" "title" $moteplass_bilde2.resources.context.caption "source" "ext")}}
-            </div>
-            <div class="bilde3">
-        {{ partial "imgh" (dict "ctx" $moteplass_bilde3 "src" $moteplass_bilde3.resources.url "alt" $moteplass_bilde3.resources.context.alt "holder" "LQTIP" "title" $moteplass_bilde3.resources.context.caption "source" "ext")}}
-            </div>
-            <div class="bilde4">
-        {{ partial "imgh" (dict "ctx" $moteplass_bilde4 "src" $moteplass_bilde4.resources.url "alt" $moteplass_bilde4.resources.context.alt "holder" "LQTIP" "title" $moteplass_bilde4.resources.context.caption "source" "ext")}}
-            </div>
-            <div class="content">
-                <h2>{{ $moteplass.Tittel}}</h2>
-                <p>{{ $moteplass.Tekst | markdownify}}</p>
-</div>
-            <div class="bilde5">
-        {{ partial "imgh" (dict "ctx" $moteplass_bilde5 "src" $moteplass_bilde5.resources.url "alt" $moteplass_bilde5.resources.context.alt "holder" "LQTIP" "title" $moteplass_bilde5.resources.context.caption "source" "ext")}}
-            </div>
+        <div class="bilde2">
+            {{ partial "imgh" (dict "ctx" $moteplass_bilde2 "src" $moteplass_bilde2.url "alt" $moteplass_bilde2.alternativeText "holder" "LQTIP" "title" $moteplass_bilde2.caption "source" "ext")}}
         </div>
-    </section>
+        <div class="bilde3">
+            {{ partial "imgh" (dict "ctx" $moteplass_bilde3 "src" $moteplass_bilde3.url "alt" $moteplass_bilde3.alternativeText "holder" "LQTIP" "title" $moteplass_bilde3.caption "source" "ext")}}
+        </div>
+        <div class="bilde4">
+            {{ partial "imgh" (dict "ctx" $moteplass_bilde4 "src" $moteplass_bilde4.url "alt" $moteplass_bilde4.alternativeText "holder" "LQTIP" "title" $moteplass_bilde4.caption "source" "ext")}}
+        </div>
+        <div class="content">
+            <h2>{{ $moteplass.Tittel}}</h2>
+            <p>{{ $moteplass.Tekst | markdownify}}</p>
+        </div>
+        <div class="bilde5">
+            {{ partial "imgh" (dict "ctx" $moteplass_bilde5 "src" $moteplass_bilde5.url "alt" $moteplass_bilde5.alternativeText "holder" "LQTIP" "title" $moteplass_bilde5.caption "source" "ext")}}
+        </div>
+    </div>
+</section>
 {{ end }}

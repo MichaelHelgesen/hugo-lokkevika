@@ -1,20 +1,27 @@
 {{ define "main" }}
 {{ $strapi_url := (getenv "HUGO_strapi_url")}}
-
-{{ $strapi_single_types := print $strapi_url "side-leverandorer?populate[0]=Topp.Bakgrunnsbilde"
-    "&"
-    "populate[1]=Leverandor.Bilde"
-}}
-{{ $opts := dict
+{{/* V5: Bruk populate=* eller ny syntax */}}
+{{ $strapi_single_types := print $strapi_url 
+    "side-leverandorer"
+    "?populate[Topp][populate]=Bakgrunnsbilde"
+    "&populate[Leverandor][populate]=Bilde"
+}}{{ $opts := dict
     "headers" (dict "Authorization" (getenv "HUGO_strapi_bearer"))
 }}
 {{ $components := resources.GetRemote $strapi_single_types $opts | unmarshal }}
-{{ $comp_data := $components.data.attributes }}
+
+{{/* V5: Fjern .attributes */}}
+{{ $comp_data := $components.data }}
 {{ $title := $comp_data.Topp.Tittel}}
-{{ $hero_bilde := $comp_data.Topp.Bakgrunnsbilde.data.attributes.formats.medium.url}}
+
+{{/* V5: Fjern .data.attributes fra media */}}
+{{ $hero_bilde := $comp_data.Topp.Bakgrunnsbilde.formats.medium.url}}
 {{ $ingres := $comp_data.Topp.Beskrivelse }}
 {{ $leverandorer := $comp_data.Leverandor }}
-{{ partial "top.html" (dict "title" $title "img" $comp_data.Topp.Bakgrunnsbilde.data.attributes "ingres" $ingres) }}
+
+{{/* V5: Fjern .data.attributes fra partial */}}
+{{ partial "top.html" (dict "title" $title "img" $comp_data.Topp.Bakgrunnsbilde "ingres" $ingres) }}
+
     {{ range $leverandorer }}
     <div class="leverandor">
         <div class="leverandor--wrapper">
@@ -23,11 +30,10 @@
                 {{ .Tekst | markdownify}}
                 <a class="button" href="{{ .Lenke_til_leverandor }}">Besøk nettsiden</a>
             </div>
-            <div class="leverandor--bilde" style="background-image:url({{.Bilde.data.attributes.formats.medium.url}})">
+            {{/* V5: Fjern .data.attributes fra Bilde */}}
+            <div class="leverandor--bilde" style="background-image:url({{ .Bilde.formats.medium.url }})">
             </div>
         </div>
     </div>
     {{ end }}
 {{ end }}
-
-

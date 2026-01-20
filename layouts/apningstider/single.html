@@ -1,23 +1,33 @@
 {{ define "main" }}
 {{ $strapi_url := (getenv "HUGO_strapi_url")}}
-{{ $strapi_single_types := print $strapi_url "side-apningstider?populate[0]=Topp.Bakgrunnsbilde"
-    "&"
-    "populate[1]=Tekst_enspalte"
+{{/* V5: Bruk populate=* */}}
+{{ $strapi_single_types := print $strapi_url 
+    "side-apningstider"
+    "?populate[Topp][populate]=Bakgrunnsbilde"
+    "&populate[Tekst_enspalte]=*"
 }}
 {{ $opts := dict
     "headers" (dict "Authorization" (getenv "HUGO_strapi_bearer"))
 }}
-
-{{ $strapi_collection_datoer := print $strapi_url "apningstiders?populate=*" }}
+{{ $strapi_collection_datoer := print $strapi_url 
+    "apningstiders"
+    "?populate[Datoer]=*"
+}}
 {{ $dato_liste := resources.GetRemote $strapi_collection_datoer $opts | unmarshal }}
 {{ $components := resources.GetRemote $strapi_single_types $opts | unmarshal }}
-{{ $comp_data := $components.data.attributes }}
-{{ $title := $comp_data.Topp.Tittel}}
-{{ $hero_bilde := $comp_data.Topp.Bakgrunnsbilde.data.attributes.formats.medium.url}}
-{{ $ingres := $comp_data.Topp.Beskrivelse }}
 
+{{/* V5: Fjern .attributes */}}
+{{ $comp_data := $components.data }}
+{{ $title := $comp_data.Topp.Tittel}}
+
+{{/* V5: Fjern .data.attributes fra media */}}
+{{ $hero_bilde := $comp_data.Topp.Bakgrunnsbilde.formats.medium.url}}
+{{ $ingres := $comp_data.Topp.Beskrivelse }}
 {{ $tekst := $comp_data.Tekst_enspalte }}
-{{ partial "top.html" (dict "title" $title "img" $comp_data.Topp.Bakgrunnsbilde.data.attributes "ingres" $ingres) }}
+
+{{/* V5: Fjern .data.attributes fra partial */}}
+{{ partial "top.html" (dict "title" $title "img" $comp_data.Topp.Bakgrunnsbilde "ingres" $ingres) }}
+
     <div class="apningstider">
     <div class="absolute"></div>
         <div class="apningstider--wrapper">
@@ -26,12 +36,14 @@
                 {{ $tekst.Tekst | markdownify}}
             </div>
            <!-- <div class="datoer">
-                {{ range $dato_liste }}
-                    {{ range . }}
+                {{/* V5: Fjern nested range - data er allerede en array */}}
+                {{ range $dato_liste.data }}
                     <div>
-                    <h3>{{.attributes.Tittel}}</h3>
+                    {{/* V5: Fjern .attributes */}}
+                    <h3>{{ .Tittel }}</h3>
                     <div class="dato--wrap">
-                        {{ range .attributes.Datoer }}
+                        {{/* V5: Datoer er direkte tilgjengelig */}}
+                        {{ range .Datoer }}
                         <div class="day--wrap">
                             <div class="dato">{{ .Dato }}.</div>
                             <div class="tekst">{{ .Tekst }}</div>
@@ -39,11 +51,8 @@
                         {{ end }}
                     </div>
                     </div>
-                    {{ end }}
                 {{ end }}
            </div> -->
     </div>
+</div>
 {{ end }}
-
-
-

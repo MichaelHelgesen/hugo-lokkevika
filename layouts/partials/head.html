@@ -56,21 +56,21 @@
 
 <head>
     {{ if or .IsPage .IsHome}}
-    {{- with $components.data.attributes.metadata -}}
+    {{- with $components.data.metadata -}}
         
 {{ $metaimage := ""}}
-        {{with .Metabilde.data}}
+        {{with .Metabilde}}
             {{ range .}}
-            {{ $metaimage = or .attributes.formats.small.url .formats.small.url }}
+            {{ $metaimage = or .formats.small.url .formats.small.url }}
         {{end }}
     {{ end }} 
-    <meta name="description" content="{{ $components.data.attributes.metadata.Metabeskrivelse }}">
-    <meta name="title" content="{{ $components.data.attributes.metadata.Metatittel }}">
-    <meta property="og:title" content="{{$components.data.attributes.metadata.Metatittel}}" />
+    <meta name="description" content="{{ $components.data.metadata.Metabeskrivelse }}">
+    <meta name="title" content="{{ $components.data.metadata.Metatittel }}">
+    <meta property="og:title" content="{{$components.data.metadata.Metatittel}}" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="{{ $metaimage }}" /> 
     <meta property="og:url" content="https://www.lokkevikahandel.no" />
-    <meta property="og:description" content="{{$components.data.attributes.metadata.Metabeskrivelse}}" />
+    <meta property="og:description" content="{{$components.data.metadata.Metabeskrivelse}}" />
     {{ end }}
     {{- end }}
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

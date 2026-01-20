@@ -1,0 +1,49 @@
+{{ define "main" }}
+{{ $strapi_url := (getenv "HUGO_strapi_url")}}
+
+{{ $strapi_single_types := print $strapi_url 
+    "side-personvern"
+    "?populate[Topp][populate]=Bakgrunnsbilde"
+    "&populate[Tekst]=*"
+}}
+
+{{ $opts := dict
+    "headers" (dict "Authorization" (getenv "HUGO_strapi_bearer"))
+}}
+
+{{ $components := resources.GetRemote $strapi_single_types $opts | unmarshal }}
+{{/* Debug: Sjekk hva vi får */}}
+{{ if not $components.data }}
+    <p>Feil: Ingen data fra Strapi. Sjekk at side-personvern er publisert.</p>
+{{ else }}
+    {{ $comp_data := $components.data }}
+    {{ $title := $comp_data.Topp.Tittel }}
+    {{ $ingres := $comp_data.Topp.Beskrivelse }}
+    {{ $innhold := $comp_data.Tekst.Tekst }}
+    
+    {{/* Sjekk om Bakgrunnsbilde eksisterer før partial */}}
+    {{ if $comp_data.Topp.Bakgrunnsbilde }}
+        {{ partial "top.html" (dict "title" $title "img" $comp_data.Topp.Bakgrunnsbilde "ingres" $ingres) }}
+    {{ else }}
+        {{/* Fallback uten bilde */}}
+        <div class="top">
+            <div class="top--wrapper">
+                <div class="top--wrapper_content">
+                    <h1>{{ $title }}</h1>
+                    <p>{{ $ingres }}</p>
+                </div>
+            </div>
+        </div>
+    {{ end }}
+
+    <div class="personvern">
+        <div class="personvern--wrapper">
+            <div class="enspalte">
+                <div>
+                {{ $innhold | markdownify }}
+                </div>
+            </div>
+        </div>
+    </div>
+{{ end }}
+{{ end }}

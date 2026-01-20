@@ -1,0 +1,24 @@
+@import url("topp.css");
+
+.personvern--wrapper {
+    padding: var(--section-padding) var(--padding-desktop) var(--section-padding)  var(--padding-desktop);
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+.personvern h2 {
+    margin-bottom: 32px;
+}
+
+.personvern .enspalte a {
+    color: var(--main);
+}
+
+@media only screen and (min-width: 768px) {
+    .personvern .enspalte > div {
+        width: 65%;
+        margin: 0 auto;
+    }
+}
+
+

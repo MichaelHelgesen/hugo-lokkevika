@@ -637,10 +637,108 @@
         </div>
     </div>
     <div class="copyright">
-        Copyright 2026  |  Løkkevika Handel
+        Copyright 2026  |  Løkkevika Handel |  <a style="color: white" href="/personvern">Personvern</a> 
+
     </div>
 </footer>
  
    
+   <div id="cookie-consent" class="cookie-consent" style="display: none;">
+    <div class="cookie-consent__content">
+        <p>Vi bruker informasjonskapsler (cookies) for å forbedre din opplevelse på nettsiden. Ved å fortsette å bruke siden godtar du vår bruk av informasjonskapsler.</p>
+        <div class="cookie-consent__buttons">
+            <button id="cookie-accept" class="button">Godta</button>
+            <button id="cookie-decline" class="button outline">Avvis</button>
+            <a href="/personvern" class="cookie-consent__link">Les mer</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.cookie-consent {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.98);
+    border-top: 2px solid #B98A54;
+    padding: 20px;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    z-index: 9999;
+}
+
+.cookie-consent__content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.cookie-consent__content p {
+    margin: 0;
+    flex: 1;
+}
+
+.cookie-consent__buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.cookie-consent__link {
+    color: #B98A54;
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .cookie-consent__content {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+</style>
+
+<script>
+(function() {
+    const consent = localStorage.getItem('cookie-consent');
+    const banner = document.getElementById('cookie-consent');
+    
+    if (!consent) {
+        banner.style.display = 'block';
+    } else if (consent === 'accepted') {
+        loadAnalytics();
+    }
+    
+    document.getElementById('cookie-accept').addEventListener('click', function() {
+        localStorage.setItem('cookie-consent', 'accepted');
+        banner.style.display = 'none';
+        loadAnalytics();
+    });
+    
+    document.getElementById('cookie-decline').addEventListener('click', function() {
+        localStorage.setItem('cookie-consent', 'declined');
+        banner.style.display = 'none';
+    });
+    
+    function loadAnalytics() {
+        
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-L71KR4JNPY';
+        document.head.appendChild(script);
+        
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-L71KR4JNPY', {
+            'anonymize_ip': true,
+            'cookie_flags': 'SameSite=None;Secure'
+        });
+    }
+})();
+</script>
+
 </body>
 </html>

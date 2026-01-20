@@ -18,6 +18,8 @@
   </url><url>
     <loc>//localhost:1313/om-oss/</loc>
   </url><url>
+    <loc>//localhost:1313/personvern/</loc>
+  </url><url>
     <loc>//localhost:1313/tags/</loc>
   </url>
 </urlset>

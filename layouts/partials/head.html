@@ -34,6 +34,12 @@
         }}
         {{ $components = resources.GetRemote $strapi_single_types $opts | unmarshal }}
         {{ $stylesheet = print "kontakt.css" }}
+    {{ else if eq .Page.Type "personvern"}}
+        {{ $strapi_single_types := print 
+            $strapi_url "side-personvern?populate[15]=metadata.Metabilde" 
+        }}
+        {{ $components = resources.GetRemote $strapi_single_types $opts | unmarshal }}
+        {{ $stylesheet = print "personvern.css" }}
     {{ else if eq .Page.Type "lokkevika-hage"}}
         {{ $strapi_single_types := print 
             $strapi_url "side-lokkevika-hage?populate[15]=metadata.Metabilde" 
